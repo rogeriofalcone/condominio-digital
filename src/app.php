@@ -46,8 +46,8 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 ));
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.options' => array(
-        'cache' => isset($app['twig.options.cache']) ? $app['twig.options.cache'] : false,
-        'strict_variables' => true,
+        #'cache' => isset($app['twig.options.cache']) ? $app['twig.options.cache'] : false,
+        #'strict_variables' => true,
     ),
     'twig.form.templates' => array('form_div_layout.html.twig', 'common/form_div_layout.html.twig'),
     'twig.path' => array(__DIR__ . '/../app/views')

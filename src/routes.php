@@ -8,7 +8,7 @@ $app['controllers']->convert('user', function ($id) use ($app) {
 });
 
 // Register routes.
-$app->get('/', 'Conta\Controller\IndexController::indexAction')->bind('homepage');
+$app->get('/', 'Condominio\Controller\IndexController::indexAction')->bind('homepage');
 
 $app->get('/me', 'Conta\Controller\UserController::meAction')->bind('me');
 $app->match('/login', 'Conta\Controller\UserController::loginAction')->bind('login');

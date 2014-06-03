@@ -1,47 +1,77 @@
 <!doctype html>
 <head>
     <meta charset="utf-8">
-    <title>{{ 'Administração Reclame Imóvel'|trans }}</title>
+    <title>{{ 'Administração de Condomínio'|trans }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='http://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
-    <link href="{{ app.request.basepath }}/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="{{ app.request.basepath }}/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="{{ app.request.basepath }}/css/main.css" rel="stylesheet" type='text/css'>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Reclamações, organização, eventos tudo em um só lugar Síndico Online">
+    <meta property="og:description" content="Reclamações, organização, eventos tudo em um só lugar Síndico Online" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Administração de Condomínio" />
+    <meta property="og:site_name" content="Reclame Imóvel" />
+    <meta property="og:url" content="http://www.reclameimovel.com.br" />        
+    <meta property="og:image" content="http://www.reclameimovel.com.br/images/250x250Logo.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="100" />
+    <meta property="og:image:height" content="100" />
+    <meta property="og:type" content="website" />
+    <meta property="fb:app_id" content="237093413164290" /> 
+    <meta name="author" content="Reclame Imóvel" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="http://www.reclameimovel.com.br/images/favicon.ico" />
+    <meta name="language" content="pt" />      
+        
+        
 </head>
-<body>
-    {% set active = active|default(null) %}
-    <div class="navbar navbar-fixed-top navbar-inverse">
-        <div class="navbar-inner">
-            <ul  class="nav navbar-nav">
-                <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}"><i class="icon-home"></i>  {{ 'Home'|trans }}</a></li>
-                {% if is_granted('ROLE_ADMIN') %}
-                <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}"><i class="icon-dashboard"></i>  {{ 'Administration'|trans }}</a></li>
-                <li {% if 'morador' == active %}class="active"{% endif %}><a href="{{ path('admin_morador') }}"><i class="icon-user"></i>  {{ 'Morador'|trans }}</a></li>
-                <li  class="dropdown"> 
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuração <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-                {% endif %}                
-            </ul>
-            <ul class="nav pull-right">
-                {% if is_granted('ROLE_USER') %}
-                    <li {% if 'me' == active %}class="active"{% endif %}><a href="{{ path('me') }}"><i class="icon-user"></i> My Profile</a></li>
-                    <li><a href="{{ path('logout') }}">{{ 'Logout'|trans }}</a></li>
-                {% else %}
-                    <li {% if 'login' == active %}class="active"{% endif %}><a href="{{ path('login') }}"><i class="icon-user"></i> {{ 'Login'|trans }}</a></li>
-                {% endif %}
-            </ul>
+<body role="document">
+    {% set active = active|default(null) %}    
+    <div role="navigation" class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img id="logoClick" src="http://www.reclameimovel.com.br/images/250x250Logo.png" style="cursor:pointer; width: 40px;height: 40px;margin-right: 10px;margin-left:10px;margin-top: 5px" alt="Logo Reclame Imóvel" />
         </div>
+        <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}"><i class="icon-home"></i> {{ 'Principal'|trans }}</a></li>
+            <li><a href="#about">Quem somos</a></li>
+            <li><a href="#contact">Sugestão</a></li>
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Termo</a></li>
+            {% if is_granted('ROLE_USER') %}
+                    <li {% if 'me' == active %}class="active"{% endif %}><a href="{{ path('me') }}"><i class="icon-user"></i>Meus Dados</a></li>
+                    <li><a href="{{ path('logout') }}"><i class="icon-lock"></i>{{ 'Sair'|trans }}</a></li>
+                {% else %}
+                    <li {% if 'login' == active %}class="active"{% endif %}><a href="{{ path('login') }}"><i class="icon-upload"></i> {{ 'Entrar'|trans }}</a></li>
+                {% endif %}  
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
-    <div id="front_header">{{ 'Administração Reclame Imóvel'|trans }}</div>
-
     {% block secondaryNavigation %}
     {% endblock %}
         <div class="container">
@@ -49,24 +79,8 @@
         </div>
     {% endblock %}
 
-    <script src="{{ app.request.basepath }}/js/jquery.js"></script>
-    <script src="{{ app.request.basepath }}/js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="{{ app.request.basepath }}/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-transition.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-alert.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-modal.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-dropdown.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-scrollspy.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-tab.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-tooltip.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-popover.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-button.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-collapse.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-carousel.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-typeahead.js"></script>
-    <script src="{{ app.request.basepath }}/js/bootstrap-affix.js"></script>
-    <script src="{{ app.request.basepath }}/js/holder/holder.js"></script>
-    <script src="{{ app.request.basepath }}/js/google-code-prettify/prettify.js"></script>
+
 </body>
 </html>
