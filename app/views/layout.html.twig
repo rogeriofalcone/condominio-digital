@@ -1,0 +1,72 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ 'Administração Reclame Imóvel'|trans }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
+    <link href="{{ app.request.basepath }}/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="{{ app.request.basepath }}/css/main.css" rel="stylesheet" type='text/css'>
+</head>
+<body>
+    {% set active = active|default(null) %}
+    <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+            <ul  class="nav navbar-nav">
+                <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}"><i class="icon-home"></i>  {{ 'Home'|trans }}</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}"><i class="icon-dashboard"></i>  {{ 'Administration'|trans }}</a></li>
+                <li {% if 'morador' == active %}class="active"{% endif %}><a href="{{ path('admin_morador') }}"><i class="icon-user"></i>  {{ 'Morador'|trans }}</a></li>
+                <li  class="dropdown"> 
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuração <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+                {% endif %}                
+            </ul>
+            <ul class="nav pull-right">
+                {% if is_granted('ROLE_USER') %}
+                    <li {% if 'me' == active %}class="active"{% endif %}><a href="{{ path('me') }}"><i class="icon-user"></i> My Profile</a></li>
+                    <li><a href="{{ path('logout') }}">{{ 'Logout'|trans }}</a></li>
+                {% else %}
+                    <li {% if 'login' == active %}class="active"{% endif %}><a href="{{ path('login') }}"><i class="icon-user"></i> {{ 'Login'|trans }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div id="front_header">{{ 'Administração Reclame Imóvel'|trans }}</div>
+
+    {% block secondaryNavigation %}
+    {% endblock %}
+        <div class="container">
+            {% block content %}
+        </div>
+    {% endblock %}
+
+    <script src="{{ app.request.basepath }}/js/jquery.js"></script>
+    <script src="{{ app.request.basepath }}/js/main.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-transition.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-alert.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-modal.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-dropdown.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-scrollspy.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-tab.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-tooltip.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-popover.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-button.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-collapse.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-carousel.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-typeahead.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap-affix.js"></script>
+    <script src="{{ app.request.basepath }}/js/holder/holder.js"></script>
+    <script src="{{ app.request.basepath }}/js/google-code-prettify/prettify.js"></script>
+</body>
+</html>

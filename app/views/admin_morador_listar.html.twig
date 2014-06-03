@@ -1,0 +1,35 @@
+{% extends 'admin_layout.html.twig' %}
+
+{% block content %}
+        {% set alertTypeAvaillable = [ 'info', 'success', 'warning', 'error'] %}
+                {% for alert in alertTypeAvaillable %}
+                    {% for message in app.session.getFlashBag.get(alert) %}
+                        <div class="alert alert-{{ alert }}" >
+                            <button class="close" data-dismiss="alert">×</button>
+                            {{ message|trans }}
+                        </div>
+                    {% endfor %}
+        {% endfor %}
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>Morador</b></div>
+                <div class="panel-body">
+                    <div class="col-md-5">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <td>Nome</td>
+                                    <td>Email</td>
+                                </tr>
+                            {% for morador in aLista %}
+                                <tr>
+                                    <td>{{morador.name}}</td>
+                                    <td>{{morador.email}}</td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                        {% include "pagination_reclamacao.html.twig" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
