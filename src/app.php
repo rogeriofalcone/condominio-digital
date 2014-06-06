@@ -36,7 +36,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
             'logout'  => true,
             'anonymous' => true,
             'users' => $app->share(function () use ($app) {
-                return new Conta\Repository\UserRepository($app['db'], $app['security.encoder.digest']);
+                return new Condominio\Repository\UserRepository($app['db'], $app['security.encoder.digest']);
             }),
         ),
     ),

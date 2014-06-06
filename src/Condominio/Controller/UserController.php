@@ -1,9 +1,9 @@
 <?php
 
-namespace Conta\Controller;
+namespace Condominio\Controller;
 
-use Conta\Entity\User;
-use Conta\Form\Type\UserType;
+use Condominio\Entity\User;
+use Condominio\Form\Type\UserType;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -23,7 +23,7 @@ class __TwigTemplate_058aff29272bae10e2774d8cd2f89cc2ac8113712887785375632ab54c0
     <meta charset=\"utf-8\">
     <title>";
         // line 4
-        echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Administração Reclame Imóvel"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Administração de Condomínio"), "html", null, true);
         echo "</title>
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
     <link href='http://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
@@ -34,31 +34,36 @@ class __TwigTemplate_058aff29272bae10e2774d8cd2f89cc2ac8113712887785375632ab54c0
     <link href=\"";
         // line 8
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
+        echo "/css/theme.min.css\" rel=\"stylesheet\" />
+    <link href=\"";
+        // line 9
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/css/main.css\" rel=\"stylesheet\" type='text/css'>
 </head>
-<body>
+<body role=\"document\">
     ";
-        // line 11
-        $context["active"] = ((array_key_exists("active", $context)) ? (_twig_default_filter((isset($context["active"]) ? $context["active"] : $this->getContext($context, "active")), null)) : (null));
         // line 12
+        $context["active"] = ((array_key_exists("active", $context)) ? (_twig_default_filter((isset($context["active"]) ? $context["active"] : $this->getContext($context, "active")), null)) : (null));
+        // line 13
         echo "    <div class=\"navbar navbar-fixed-top navbar-inverse\">
         <div class=\"navbar-inner\">
             <ul  class=\"nav navbar-nav\">
                 <li ";
-        // line 15
+        // line 16
         if (("homepage" == (isset($context["active"]) ? $context["active"] : $this->getContext($context, "active")))) {
             echo "class=\"active\"";
         }
         echo "><a href=\"";
         echo $this->env->getExtension('routing')->getPath("homepage");
         echo "\"><i class=\"icon-home\"></i>  ";
-        echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Home"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Principal"), "html", null, true);
         echo "</a></li>
+                
                 ";
-        // line 16
+        // line 18
         if ($this->env->getExtension('security')->isGranted("ROLE_ADMIN")) {
-            // line 17
-            echo "                <li ";
+            // line 19
+            echo "                    <li ";
             if (("homepage" == (isset($context["active"]) ? $context["active"] : $this->getContext($context, "active")))) {
                 echo "class=\"active\"";
             }
@@ -67,8 +72,8 @@ class __TwigTemplate_058aff29272bae10e2774d8cd2f89cc2ac8113712887785375632ab54c0
             echo "\"><i class=\"icon-dashboard\"></i>  ";
             echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Administration"), "html", null, true);
             echo "</a></li>
-                <li ";
-            // line 18
+                    <li ";
+            // line 20
             if (("morador" == (isset($context["active"]) ? $context["active"] : $this->getContext($context, "active")))) {
                 echo "class=\"active\"";
             }
@@ -76,146 +81,132 @@ class __TwigTemplate_058aff29272bae10e2774d8cd2f89cc2ac8113712887785375632ab54c0
             echo $this->env->getExtension('routing')->getPath("admin_morador");
             echo "\"><i class=\"icon-user\"></i>  ";
             echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Morador"), "html", null, true);
-            echo "</a></li>
-                <li  class=\"dropdown\"> 
-                     <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Configuração <b class=\"caret\"></b></a>
-                    <ul class=\"dropdown-menu\">
-                    <li><a href=\"#\">Action</a></li>
-                    <li><a href=\"#\">Another action</a></li>
-                    <li><a href=\"#\">Something else here</a></li>
-                    <li class=\"divider\"></li>
-                    <li><a href=\"#\">Separated link</a></li>
-                    <li class=\"divider\"></li>
-                    <li><a href=\"#\">One more separated link</a></li>
-                  </ul>
-                </li>
+            echo "</a></li>                
                 ";
         }
-        // line 31
-        echo "                
+        // line 21
+        echo "    
+             
             </ul>
             <ul class=\"nav pull-right\">
                 ";
-        // line 34
+        // line 25
         if ($this->env->getExtension('security')->isGranted("ROLE_USER")) {
-            // line 35
+            // line 26
             echo "                    <li ";
             if (("me" == (isset($context["active"]) ? $context["active"] : $this->getContext($context, "active")))) {
                 echo "class=\"active\"";
             }
             echo "><a href=\"";
             echo $this->env->getExtension('routing')->getPath("me");
-            echo "\"><i class=\"icon-user\"></i> My Profile</a></li>
+            echo "\"><i class=\"icon-user\"></i>Meus Dados</a></li>
                     <li><a href=\"";
-            // line 36
+            // line 27
             echo $this->env->getExtension('routing')->getPath("logout");
-            echo "\">";
-            echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Logout"), "html", null, true);
+            echo "\"><i class=\"icon-lock\"></i>";
+            echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Sair"), "html", null, true);
             echo "</a></li>
                 ";
         } else {
-            // line 38
+            // line 29
             echo "                    <li ";
             if (("login" == (isset($context["active"]) ? $context["active"] : $this->getContext($context, "active")))) {
                 echo "class=\"active\"";
             }
             echo "><a href=\"";
             echo $this->env->getExtension('routing')->getPath("login");
-            echo "\"><i class=\"icon-user\"></i> ";
-            echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Login"), "html", null, true);
+            echo "\"><i class=\"icon-upload\"></i> ";
+            echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Entrar"), "html", null, true);
             echo "</a></li>
                 ";
         }
-        // line 40
-        echo "            </ul>
+        // line 30
+        echo "                    
+            </ul>
         </div>
     </div>
-    <div id=\"front_header\">";
-        // line 43
-        echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("Administração Reclame Imóvel"), "html", null, true);
-        echo "</div>
 
     ";
-        // line 45
+        // line 35
         $this->displayBlock('secondaryNavigation', $context, $blocks);
-        // line 47
+        // line 37
         echo "        <div class=\"container\">
             ";
-        // line 48
+        // line 38
         $this->displayBlock('content', $context, $blocks);
-        // line 51
+        // line 41
         echo "
     <script src=\"";
-        // line 52
+        // line 42
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/jquery.js\"></script>
     <script src=\"";
-        // line 53
+        // line 43
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/main.js\"></script>
     <script src=\"";
-        // line 54
+        // line 44
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap.min.js\"></script>
     <script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script>
     <script src=\"";
-        // line 56
+        // line 46
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-transition.js\"></script>
     <script src=\"";
-        // line 57
+        // line 47
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-alert.js\"></script>
     <script src=\"";
-        // line 58
+        // line 48
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-modal.js\"></script>
     <script src=\"";
-        // line 59
+        // line 49
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-dropdown.js\"></script>
     <script src=\"";
-        // line 60
+        // line 50
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-scrollspy.js\"></script>
     <script src=\"";
-        // line 61
+        // line 51
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-tab.js\"></script>
     <script src=\"";
-        // line 62
+        // line 52
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-tooltip.js\"></script>
     <script src=\"";
-        // line 63
+        // line 53
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-popover.js\"></script>
     <script src=\"";
-        // line 64
+        // line 54
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-button.js\"></script>
     <script src=\"";
-        // line 65
+        // line 55
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-collapse.js\"></script>
     <script src=\"";
-        // line 66
+        // line 56
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-carousel.js\"></script>
     <script src=\"";
-        // line 67
+        // line 57
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-typeahead.js\"></script>
     <script src=\"";
-        // line 68
+        // line 58
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/bootstrap-affix.js\"></script>
     <script src=\"";
-        // line 69
+        // line 59
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/holder/holder.js\"></script>
     <script src=\"";
-        // line 70
+        // line 60
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "request"), "basepath"), "html", null, true);
         echo "/js/google-code-prettify/prettify.js\"></script>
 </body>
@@ -223,17 +214,17 @@ class __TwigTemplate_058aff29272bae10e2774d8cd2f89cc2ac8113712887785375632ab54c0
 ";
     }
 
-    // line 45
+    // line 35
     public function block_secondaryNavigation($context, array $blocks = array())
     {
-        // line 46
+        // line 36
         echo "    ";
     }
 
-    // line 48
+    // line 38
     public function block_content($context, array $blocks = array())
     {
-        // line 49
+        // line 39
         echo "        </div>
     ";
     }
@@ -250,6 +241,6 @@ class __TwigTemplate_058aff29272bae10e2774d8cd2f89cc2ac8113712887785375632ab54c0
 
     public function getDebugInfo()
     {
-        return array (  237 => 49,  234 => 48,  230 => 46,  227 => 45,  219 => 70,  215 => 69,  211 => 68,  207 => 67,  203 => 66,  199 => 65,  195 => 64,  191 => 63,  187 => 62,  183 => 61,  179 => 60,  175 => 59,  171 => 58,  167 => 57,  163 => 56,  158 => 54,  154 => 53,  150 => 52,  147 => 51,  145 => 48,  142 => 47,  140 => 45,  135 => 43,  130 => 40,  118 => 38,  111 => 36,  102 => 35,  100 => 34,  95 => 31,  72 => 18,  61 => 17,  59 => 16,  49 => 15,  44 => 12,  42 => 11,  36 => 8,  32 => 7,  26 => 4,  21 => 1,  33 => 5,  30 => 4,  25 => 2,);
+        return array (  228 => 39,  225 => 38,  221 => 36,  218 => 35,  210 => 60,  206 => 59,  202 => 58,  198 => 57,  194 => 56,  190 => 55,  186 => 54,  182 => 53,  178 => 52,  174 => 51,  170 => 50,  166 => 49,  162 => 48,  158 => 47,  154 => 46,  149 => 44,  145 => 43,  141 => 42,  138 => 41,  136 => 38,  133 => 37,  131 => 35,  124 => 30,  112 => 29,  105 => 27,  96 => 26,  94 => 25,  88 => 21,  77 => 20,  66 => 19,  64 => 18,  53 => 16,  48 => 13,  46 => 12,  40 => 9,  36 => 8,  32 => 7,  26 => 4,  21 => 1,);
     }
 }

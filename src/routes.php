@@ -10,14 +10,14 @@ $app['controllers']->convert('user', function ($id) use ($app) {
 // Register routes.
 $app->get('/', 'Condominio\Controller\IndexController::indexAction')->bind('homepage');
 
-$app->get('/me', 'Conta\Controller\UserController::meAction')->bind('me');
-$app->match('/login', 'Conta\Controller\UserController::loginAction')->bind('login');
-$app->get('/logout', 'Conta\Controller\UserController::logoutAction')->bind('logout');
+$app->get('/me', 'Condominio\Controller\UserController::meAction')->bind('me');
+$app->match('/login', 'Condominio\Controller\UserController::loginAction')->bind('login');
+$app->get('/logout', 'Condominio\Controller\UserController::logoutAction')->bind('logout');
 $app->get('/email/bemvindo', 'Condominio\Controller\IndexController::emailbemvindoAction')->bind('emailbemvindo');
 $app->get('/admin/email/enviar/{idu}/{email}', 'Condominio\Controller\IndexController::emailSendAction')->bind('emailbemvindo')->value('idu',false)->value('email',false);
-$app->get('/api/pgto', 'Conta\Controller\ApiPgtoController::indexAction');
-$app->get('/api/pgto/{pgto}', 'Conta\Controller\ApiPgtoController::viewAction')->value('pgto',false);
 
+$app->get('/admin/index', 'Condominio\Controller\AdminController::indexAction')->bind('homeuser');
+$app->get('/admin/reclamar/adicionar', 'Condominio\Controller\ReclamacaoController::adicionarAction')->bind('adicionar_reclamacao');
 $app->get('/admin/morador', 'Condominio\Controller\MoradorController::listarAdminAction')->bind('admin_morador');
 $app->get('/admin/morador/email', 'Condominio\Controller\MoradorController::listarEmailAdminAction')->bind('admin_morador_email');
 
