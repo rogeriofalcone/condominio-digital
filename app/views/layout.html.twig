@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <title>{{ 'Administração de Condomínio'|trans }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='http://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
+    
     <link href="{{ app.request.basepath }}/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="{{ app.request.basepath }}/css/main.css" rel="stylesheet" type='text/css'>
     
@@ -44,6 +44,11 @@
         </div>
         <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+            {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('homeuser') }}"><span class="glyphicon glyphicon-home"></span> {{ 'Principal'|trans }}</a></li>
+            <li><a href="{{ path('adicionar_reclamacao') }}"><span class="glyphicon glyphicon-bullhorn"></span> {{ 'Reclamar'|trans }}</a></li>
+            <li><a href="#contact"><span class="glyphicon glyphicon-envelope"></span> Sugestão</a></li>
+            {% else %}
             <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}"><i class="icon-home"></i> {{ 'Principal'|trans }}</a></li>
             <li><a href="#about">Quem somos</a></li>
             <li><a href="#contact">Sugestão</a></li>
@@ -59,15 +64,16 @@
                 <li><a href="#">One more separated link</a></li>
               </ul>
             </li>
+            {% endif %} 
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Termo</a></li>
             {% if is_granted('ROLE_USER') %}
-                    <li {% if 'me' == active %}class="active"{% endif %}><a href="{{ path('me') }}"><i class="icon-user"></i>Meus Dados</a></li>
-                    <li><a href="{{ path('logout') }}"><i class="icon-lock"></i>{{ 'Sair'|trans }}</a></li>
+                    <li {% if 'me' == active %}class="active"{% endif %}><a href="{{ path('me') }}"><span class="glyphicon glyphicon-user"></span> Meus Dados</a></li>
+                    <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-download"></span> {{ 'Sair'|trans }}</a></li>
                 {% else %}
-                    <li {% if 'login' == active %}class="active"{% endif %}><a href="{{ path('login') }}"><i class="icon-upload"></i> {{ 'Entrar'|trans }}</a></li>
-                {% endif %}  
+                    <li><a href="{{ path('login') }}"><span class="glyphicon glyphicon-upload"></span> {{ 'Entrar'|trans }}</a></li>
+                 {% endif %} 
           </ul>
         </div><!--/.nav-collapse -->
       </div>

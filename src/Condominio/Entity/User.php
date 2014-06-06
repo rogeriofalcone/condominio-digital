@@ -1,183 +1,209 @@
 <?php
 
 namespace Condominio\Entity;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
-class User implements AdvancedUserInterface
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+class User implements UserInterface
 {
-    private $idu;
-    private $idemp;
-
-
-    private $username;
-    private $password;
-    private $email;
-    private $enabled;
-    private $accountNonExpired;
-    private $credentialsNonExpired;
-    private $accountNonLocked;
-    private $roles;
-    
-    private $cpf;
-    private $dadosImovel;
-    private $telCelular;
-    private $telResidencial;
-    private $telContato;
-    private $name;
-
-    public function __construct()
-    {
-    }
-    public function getIdu() {
-        return $this->idu;
-    }
-
-    public function setIdu($idu) {
-        $this->idu = $idu;
-    }
-
-        /**
-     * Gets the user email.
+    /**
+     * User id.
      *
-     * @return string
+     * @var integer
      */
-    public function getEmail()
+    protected $id;
+
+    /**
+     * Username.
+     *
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * Salt.
+     *
+     * @var string
+     */
+    protected $salt;
+
+    /**
+     * Password.
+     *
+     * @var integer
+     */
+    protected $password;
+
+    /**
+     * Email.
+     *
+     * @var string
+     */
+    protected $mail;
+
+    /**
+     * Role.
+     *
+     * ROLE_USER or ROLE_ADMIN.
+     *
+     * @var string
+     */
+    protected $role;
+
+    /**
+     * The filename of the main artist image.
+     *
+     * @var string
+     */
+    protected $image;
+
+    /**
+     * When the artist entity was created.
+     *
+     * @var DateTime
+     */
+    protected $createdAt;
+    protected $idcond;
+    protected $name;
+    /**
+     * The temporary uploaded file.
+     *
+     * $this->image stores the filename after the file gets moved to "images/".
+     *
+     * @var \Symfony\Component\HttpFoundation\File\UploadedFile
+     */
+    protected $file;
+
+    public function getId()
     {
-        return $this->email;
+        return $this->id;
     }
-    public function setEmail($email)
+
+    public function setId($id)
     {
-        $this->email = $email;
+        $this->id = $id;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSalt()
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getUsername()
     {
         return $this->username;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isAccountNonExpired()
+    public function setUsername($username)
     {
-        return $this->accountNonExpired;
+        $this->username = $username;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function isAccountNonLocked()
+     * @inheritDoc
+    */
+    public function getSalt()
     {
-        return $this->accountNonLocked;
+        return $this->salt;
+    }
+
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function isCredentialsNonExpired()
+    public function getPassword()
     {
-        return $this->credentialsNonExpired;
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+    }
+
+    public function getImage() {
+        // Make sure the image is never empty.
+        if (empty($this->image)) {
+            $this->image = 'placeholder.gif';
+        }
+
+        return $this->image;
+    }
+
+    public function setImage($image) {
+        $this->image = $image;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getFile() {
+        return $this->file;
+    }
+
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function isEnabled()
+    public function getRoles()
     {
-        return $this->enabled;
+        return array($this->getRole());
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role) {
+        $this->role = $role;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function eraseCredentials()
     {
     }
-
-    public function getCpf() {
-        return $this->cpf;
-    }
-
-    public function getDadosImovel() {
-        return $this->dadosImovel;
-    }
-
-    public function getTelCelular() {
-        return $this->telCelular;
-    }
-
-    public function getTelResidencial() {
-        return $this->telResidencial;
-    }
-
-    public function getTelContato() {
-        return $this->telContato;
-    }
-
-    public function setCpf($cpf) {
-        $this->cpf = $cpf;
-    }
-
-    public function setDadosImovel($dadosImovel) {
-        $this->dadosImovel = $dadosImovel;
-    }
-
-    public function setTelCelular($telCelular) {
-        $this->telCelular = $telCelular;
-    }
-
-    public function setTelResidencial($telResidencial) {
-        $this->telResidencial = $telResidencial;
-    }
-
-    public function setTelContato($telContato) {
-        $this->telContato = $telContato;
+    public function getIdcond() {
+        return $this->idcond;
     }
 
     public function getName() {
         return $this->name;
     }
 
+    public function setIdcond($idcond) {
+        $this->idcond = $idcond;
+    }
+
     public function setName($name) {
         $this->name = $name;
-        return $this;
     }
-    public function getIdemp() {
-        return $this->idemp;
-    }
-
-    public function setIdemp($idemp) {
-        $this->idemp = $idemp;
-    }
-
-
 
 
 }

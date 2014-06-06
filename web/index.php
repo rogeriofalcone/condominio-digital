@@ -1,6 +1,6 @@
 <?php
 
-define('FSI_PUBLIC_ROOT', __DIR__);
+define('COND_PUBLIC_ROOT', __DIR__);
 
 require_once __DIR__.'/../vendor/autoload.php';
 

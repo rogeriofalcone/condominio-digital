@@ -37,7 +37,7 @@ class ReclamacaoRepository implements RepositoryInterface
     {
         $reclamacaoData = array(
             'idu' => $reclamacao->getIdu(),
-            'ide' => $reclamacao->getIde(),
+            'idcond' => $reclamacao->getIdcond(),
             'titulo' => $reclamacao->getTitulo(),
             'dados' => $reclamacao->getDados(),
             'idassunto' => $reclamacao->getIdassunto(),
@@ -91,14 +91,14 @@ class ReclamacaoRepository implements RepositoryInterface
      *
      * @return integer The total number of reclamacao.
      */
-    public function getCountSolucao($ide) {
-        return $this->db->fetchColumn("SELECT COUNT(id) FROM reclamacao where ide = '$ide' and solucao=1");
+    public function getCountSolucao($idcond) {
+        return $this->db->fetchColumn("SELECT COUNT(id) FROM reclamacao where idcond = '$idcond' and solucao=1");
     }
     public function getCountUsuario($idu) {
         return $this->db->fetchColumn("SELECT COUNT(id) FROM reclamacao where idu = '$idu'");
     }
-    public function getCountReclamacao($ide) {
-        return $this->db->fetchColumn("SELECT COUNT(id) FROM reclamacao where ide = '$ide' ");
+    public function getCountReclamacao($idcond) {
+        return $this->db->fetchColumn("SELECT COUNT(id) FROM reclamacao where idcond = '$idcond' ");
     }
 
     /**
@@ -116,10 +116,9 @@ class ReclamacaoRepository implements RepositoryInterface
         
         $queryBuilder = $this->db->createQueryBuilder();
         $queryBuilder
-            ->select('r.id,r.idu,r.ide,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.cidade,emp.uf,e.nome as nome')
+            ->select('r.id,r.idu,r.idcond,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.cidade,emp.uf')
             ->from('reclamacao', 'r')
-            ->innerJoin('r',"empreendimento","emp","emp.id = r.ide")
-            ->innerJoin('emp',"empresa","e","e.id = emp.ide")
+            ->innerJoin('r',"empreendimento","emp","emp.id = r.idcond")
             ->where("r.id = $id");
           
         $statement = $queryBuilder->execute();
@@ -151,10 +150,9 @@ class ReclamacaoRepository implements RepositoryInterface
 
         $queryBuilder = $this->db->createQueryBuilder();
         $queryBuilder
-            ->select('r.id,r.idu,r.ide,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf,e.nome as nome')
+            ->select('r.id,r.idu,r.idcond,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf')
             ->from('reclamacao', 'r')
-            ->innerJoin('r',"empreendimento","emp","emp.id = r.ide")
-            ->innerJoin('emp',"empresa","e","e.id = emp.ide");
+            ->innerJoin('r',"empreendimento","emp","emp.id = r.idcond");
         
         $queryBuilder->setMaxResults($limit)
             ->setFirstResult($offset)
@@ -176,7 +174,7 @@ class ReclamacaoRepository implements RepositoryInterface
      *
      * @return array A collection of reclamacao, keyed by reclamacao id.
      */
-    public function findReclamacaoEmpreendimento($limit, $offset = 0, $orderBy = array(),$ide=null)
+    public function findReclamacaoEmpreendimento($limit, $offset = 0, $orderBy = array(),$idcond=null)
     {
         // Provide a default orderBy.
         if (!$orderBy) {
@@ -185,17 +183,16 @@ class ReclamacaoRepository implements RepositoryInterface
 
         $queryBuilder = $this->db->createQueryBuilder();
         $queryBuilder
-            ->select('r.id,r.idu,r.ide,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf,e.nome as nome')
+            ->select('r.id,r.idu,r.idcond,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf')
             ->from('reclamacao', 'r')
-            ->innerJoin('r',"empreendimento","emp","emp.id = r.ide")
-            ->innerJoin('emp',"empresa","e","e.id = emp.ide");
+            ->innerJoin('r',"empreendimento","emp","emp.id = r.idcond");
         
         $queryBuilder->setMaxResults($limit)
             ->setFirstResult($offset)
             ->orderBy( key($orderBy), current($orderBy));
         
-        if($ide){
-            $queryBuilder->where("r.ide = $ide");
+        if($idcond){
+            $queryBuilder->where("r.idcond = $idcond");
         }
         
         $statement = $queryBuilder->execute();
@@ -218,10 +215,9 @@ class ReclamacaoRepository implements RepositoryInterface
 
         $queryBuilder = $this->db->createQueryBuilder();
         $queryBuilder
-            ->select('r.id,r.idu,r.ide,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf,e.nome as nome')
+            ->select('r.id,r.idu,r.idcond,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf')
             ->from('reclamacao', 'r')
-            ->innerJoin('r',"empreendimento","emp","emp.id = r.ide")
-            ->innerJoin('emp',"empresa","e","e.id = emp.ide");
+            ->innerJoin('r',"empreendimento","emp","emp.id = r.idcond");
         
         $queryBuilder->setMaxResults($limit)
             ->setFirstResult($offset)
@@ -253,14 +249,14 @@ class ReclamacaoRepository implements RepositoryInterface
      */
     protected function buildReclamacao($reclamacaoData)
     {
-        $empreendimento     = $this->empreendimentoRepository->find($reclamacaoData['ide']);
+        $empreendimento     = $this->empreendimentoRepository->find($reclamacaoData['idcond']);
         $collectionImagem   = $this->imagemRepository->findAllByReclamacao($reclamacaoData['id']);
         $collectionUser     = $this->userRepository->find($reclamacaoData['idu']);
         
         $reclamacao = new Reclamacao();
         $reclamacao->setId($reclamacaoData['id']);
         $reclamacao->setIdu($reclamacaoData['idu']);
-        $reclamacao->setIde($reclamacaoData['ide']);
+        $reclamacao->setIdcond($reclamacaoData['idcond']);
         $reclamacao->setVisita($reclamacaoData['visita']);        
         $reclamacao->setTitulo($reclamacaoData['titulo']);
         $reclamacao->setDescricao($reclamacaoData['descricao']);

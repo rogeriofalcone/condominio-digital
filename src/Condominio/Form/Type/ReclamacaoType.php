@@ -11,7 +11,7 @@ class ReclamacaoType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('id', 'hidden')
-                ->add('ide', 'hidden')
+                ->add('idcond', 'hidden')
                 ->add('idu', 'hidden')
                 ->add('titulo', 'text', array('attr' => array('class' => 'form-control','placeholder' => 'Título da reclamação',),'label' => 'Título'))
                 ->add('idassunto', 'choice', array(
@@ -30,13 +30,6 @@ class ReclamacaoType extends AbstractType {
                     ),
                     'label' => 'Tipo da Reclamação',
                     'data' => 1
-                ))
-                ->add('dados', 'text', array(
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Bloco 2 Ap 303, Casa 1 Bloco 10',
-                    ),
-                    'label' => 'Dados do Imóvel'
                 ))
                 ->add('descricao', 'textarea', array('attr' => array('rows' => '10','class' => 'form-control','placeholder' => 'Preencher todo o seu problema,coloque todas as informações.',),
                     'label' => 'Descrição'
