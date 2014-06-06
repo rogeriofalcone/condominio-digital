@@ -9,11 +9,13 @@ $app['controllers']->convert('user', function ($id) use ($app) {
 
 // Register routes.
 $app->get('/', 'Condominio\Controller\IndexController::indexAction')->bind('homepage');
-
 $app->get('/me', 'Conta\Controller\UserController::meAction')->bind('me');
 $app->match('/login', 'Conta\Controller\UserController::loginAction')->bind('login');
 $app->get('/logout', 'Conta\Controller\UserController::logoutAction')->bind('logout');
-$app->get('/email/bemvindo', 'Condominio\Controller\IndexController::emailbemvindoAction')->bind('emailbemvindo');
+
+// Marcelo - Action de execução de emails
+$app->get('/emails/bemvindo', 'Condominio\Controller\EmailsController::bemvindoAction')->bind('bemvindo');
+
 $app->get('/admin/email/enviar/{idu}/{email}', 'Condominio\Controller\IndexController::emailSendAction')->bind('emailbemvindo')->value('idu',false)->value('email',false);
 $app->get('/api/pgto', 'Conta\Controller\ApiPgtoController::indexAction');
 $app->get('/api/pgto/{pgto}', 'Conta\Controller\ApiPgtoController::viewAction')->value('pgto',false);
