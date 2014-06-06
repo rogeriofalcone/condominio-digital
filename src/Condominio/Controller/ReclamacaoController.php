@@ -26,49 +26,21 @@ class ReclamacaoController {
         $token = $app['security']->getToken();
         $user = $token->getUser();
         
-        if($user->getIdcond()){
-            $message = 'Desculpe mas não encontrei nenhum condomínio vinculado ao seu usuário, pora favor escolha um condomínio.';
-            $app['session']->getFlashBag()->add('warning', $message);
-            // Redirect to the edit page.
-            $redirect = $app['url_generator']->generate('homeuser');
-            return $app->redirect($redirect);
-        }
-        
-        $reclamacao = new Reclamacao();
-        
         if ($request->isMethod('GET')) {
-            if (!$oEmp) {
-                $message = 'Nenhum empreendimento foi escolhido por favor efetue uma busca e clique nele para adicionar.';
+            
+            if(!$user->getIdcond()){
+                $message = 'Desculpe mas não encontrei nenhum condomínio vinculado ao seu usuário, pora favor escolha um condomínio.';
                 $app['session']->getFlashBag()->add('warning', $message);
                 // Redirect to the edit page.
-                $redirect = $app['url_generator']->generate('principal');
+                $redirect = $app['url_generator']->generate('homeuser');
                 return $app->redirect($redirect);
             }
-            /*
-             * Pegar id do banco de dados
-             */
-            $reclamacao->setIde($oEmp->getId());
-        }
         
-        /*
-         * Pegar id da sessao
-         */
-        if($app['token']){
-            $uid = $app['token']->getUid();
-            $user = $app['repository.user']->find($uid);
-            $reclamacao->setDados($user->getDadosImovel());
-        }else{
-            $uid = 1;
+            $reclamacao = new Reclamacao();
+            $reclamacao->setIdcond($user->getIdcond());
+            $reclamacao->setIdu($user->getId());
         }
-        
-        if (!$user) {
-            $message = 'Nenhum usuário logado para efetuar o envio de uma reclamação.';
-            $app['session']->getFlashBag()->add('warning', $message);
-            $redirect = $app['url_generator']->generate('principal');
-            return $app->redirect($redirect);
-        }
-        
-        $reclamacao->setIdu($uid);
+
         
         $form = $app['form.factory']->create(new ReclamacaoType(), $reclamacao);
 
@@ -130,17 +102,10 @@ class ReclamacaoController {
 
             return false;
         } else {
-            $nome_empresa   = $oEmp->getEmpresa()->getNome();
-            $nome_emp       = $oEmp->getNome();
-            $bairro         = $oEmp->getBairro();
-            
-            $sub_titulo     = $nome_empresa. " - " . $nome_emp . " - " . $bairro;
-
             $data = array(
                 'metaDescription' => '',
                 'form' => $form->createView(),
-                'title' => 'Nova reclamação',
-                'sub_titulo' => $sub_titulo,
+                'title' => 'Nova reclamação'
             );
             return $app['twig']->render('form.html.twig', $data);
         }

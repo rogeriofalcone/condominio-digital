@@ -33,7 +33,7 @@ class Reclamacao
      *
      * @var integer
      */
-    protected $ide;
+    protected $idcond;
     
     /**
      * Id do Assunto da Reclamacao.
@@ -236,6 +236,14 @@ class Reclamacao
         $this->user = $user;
     }
 
+
+    public function getIdcond() {
+        return $this->idcond;
+    }
+
+    public function setIdcond($idcond) {
+        $this->idcond = $idcond;
+    }
 
 
 
