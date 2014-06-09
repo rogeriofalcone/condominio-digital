@@ -47,33 +47,32 @@
             {% if is_granted('ROLE_USER') %}
             <li><a href="{{ path('homeuser') }}"><span class="glyphicon glyphicon-home"></span> {{ 'Principal'|trans }}</a></li>
             <li><a href="{{ path('adicionar_reclamacao') }}"><span class="glyphicon glyphicon-bullhorn"></span> {{ 'Reclamar'|trans }}</a></li>
-            <li><a href="#contact"><span class="glyphicon glyphicon-envelope"></span> Sugestão</a></li>
+            
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Condomínio <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Reclamações</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Moradores</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Reservas de Áreas Comuns</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Informativos</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Termo</a></li>
+              </ul>
+            </li>
             {% else %}
             <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}"><i class="icon-home"></i> {{ 'Principal'|trans }}</a></li>
             <li><a href="#about">Quem somos</a></li>
             <li><a href="#contact">Sugestão</a></li>
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
             {% endif %} 
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Termo</a></li>
-            {% if is_granted('ROLE_USER') %}
-                    <li {% if 'me' == active %}class="active"{% endif %}><a href="{{ path('me') }}"><span class="glyphicon glyphicon-user"></span> Meus Dados</a></li>
+              <li><a href="#contact"><span class="glyphicon glyphicon-envelope"></span> Sugestão</a></li>
+                {% if is_granted('ROLE_USER') %}
+                    <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> &nbsp; <span class="badge pull-right">42</span></a></li>
+                    <li><a href="{{ path('me') }}"><span class="glyphicon glyphicon-user"></span> Meus Dados</a></li>
                     <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-download"></span> {{ 'Sair'|trans }}</a></li>
                 {% else %}
                     <li><a href="{{ path('login') }}"><span class="glyphicon glyphicon-upload"></span> {{ 'Entrar'|trans }}</a></li>
-                 {% endif %} 
+                {% endif %} 
           </ul>
         </div><!--/.nav-collapse -->
       </div>
