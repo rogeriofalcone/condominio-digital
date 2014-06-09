@@ -25,7 +25,7 @@ $app->get('/admin/reclamar/adicionar', 'Condominio\Controller\ReclamacaoControll
 $app->get('/admin/reclamacao/{id}', 'Condominio\Controller\ReclamacaoController::viewAction')->bind('view')->value('id',false);
 //$app->get('/admin/reclamacao', 'Condominio\Controller\ReclamacaoController::indexAction');
 $app->get('/admin/reclamacao/minhas-reclamacoes/{page}', 'Condominio\Controller\ReclamacaoController::minhasReclamacoesAction')->bind('minhas_reclamacoes')->value('page',1);;
-
+//
 $app->post('/admin/reclamar/adicionar', 'Condominio\Controller\ReclamacaoController::adicionarAction')->bind('adicionar_reclamacao_post');
 
 $app->get('/admin/morador', 'Condominio\Controller\MoradorController::listarAdminAction')->bind('admin_morador');
