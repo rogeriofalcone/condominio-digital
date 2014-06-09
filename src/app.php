@@ -65,9 +65,9 @@ $app['repository.video'] = $app->share(function ($app) {
 $app['repository.user'] = $app->share(function ($app) {
     return new Condominio\Repository\UserRepository($app['db'],$app);
 });  
-$app['repository.empreendimento'] = $app->share(function ($app) {
-    return new Condominio\Repository\EmpreendimentoRepository($app['db'],$app['repository.empresa']);
-});  
+$app['repository.condominio'] = $app->share(function ($app) {
+    return new Condominio\Repository\CondominioRepository($app['db']);
+});
 $app['repository.imagem'] = $app->share(function ($app) {
     return new Condominio\Repository\ImagemRepository($app['db']);
 });
@@ -75,10 +75,10 @@ $app['repository.usuario'] = $app->share(function ($app) {
     return new Condominio\Repository\UsuarioRepository($app['db']);
 });
 $app['repository.resposta'] = $app->share(function ($app) {
-    return new Condominio\Repository\RespostaRepository($app['db'],$app['repository.empreendimento'],$app['repository.usuario']);
+    return new Condominio\Repository\RespostaRepository($app['db'],$app['repository.condominio'],$app['repository.usuario']);
 });
 $app['repository.reclamacao'] = $app->share(function ($app) {
-    return new Condominio\Repository\ReclamacaoRepository($app['db'],$app['repository.empreendimento'],$app['repository.imagem'],$app['repository.user']);
+    return new Condominio\Repository\ReclamacaoRepository($app['db'],$app['repository.condominio'],$app['repository.imagem'],$app['repository.user']);
 });
 // Protect admin urls.
 $app->before(function (Request $request) use ($app) {

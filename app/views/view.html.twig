@@ -1,0 +1,74 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+{% set alertTypeAvaillable = [ 'info', 'success', 'warning', 'error'] %}
+        {% for alert in alertTypeAvaillable %}
+            {% for message in app.session.getFlashBag.get(alert) %}
+                <div class="alert alert-{{ alert }}" >
+                    <button class="close" data-dismiss="alert">×</button>
+                    {{ message|trans }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+<div class="col-md-10">
+    <div class="panel-group" >
+        <div class="panel panel-default">
+            <div class="panel-heading" style="padding: 3px 5px 21px 15px;">
+
+                <h3><b>{{reclamacao.titulo}}</b> </h3>
+                <div style="font-size: 10px">{{reclamacao.condominio.cidade}} - {{reclamacao.condominio.uf}} {{reclamacao.dt_cadastro.date|date('d/m/Y')}}</div>
+                <div style="float: left;font-size: 12px"><b>Autor:</b> {{reclamacao.user.name}} - Bloco: {{reclamacao.user.bloco}} - Ap: {{reclamacao.user.ap}}</div>
+
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body text-justify">
+                            {{reclamacao.descricao|nl2br}}
+                </div>
+            </div>
+        </div>
+        <br />
+        <!-- REPOSTA -->
+        {% for resp in resposta %}
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #F9A3A1;padding: 3px 5px 21px 15px;">
+                    <h5><b>Resposta</b> - {{reclamacao.condominio.nome}} - {{reclamacao.condominio.empresa.nome}}</h5>
+                    <div style="font-size: 10px">{{reclamacao.condominio.cidade}} - {{reclamacao.condominio.uf}} {{resp.dtResposta|date('d/m/Y')}}</div>
+                    <div style="font-size: 12px"><b>Autor:</b> Reclame Imóvel</div>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body text-justify">
+                        {{resp.resposta|nl2br}}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+        {% if imagem %}
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3><b>Imagens</b></h3></div>
+            <div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body text-justify">
+                        {% for img in imagem %}
+                            <img src="http://reclameimovel.com.br/images/reclamacao/{{img.file}}"  alt="Imagem {{img.id}}" class="img-thumbnail" />
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if reclamacao.youtube %}
+         <div class="panel panel-default">
+            <div class="panel-heading"><h3><b>Vídeo</b></h3></div>
+            <div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body text-justify">
+                    <iframe  width="100%" height="315" src="//www.youtube.com/embed/{{youtube}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

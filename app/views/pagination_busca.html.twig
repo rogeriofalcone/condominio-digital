@@ -1,0 +1,64 @@
+{% if numPages > 1 %}
+        <ul class="pager">
+            <li {% if currentPage == 1 %}class="disabled"{% endif %}>
+                {% if currentPage == 1 %}<a href="#">Anterior</a>{% endif %}
+                {% if busca %}
+                    {% if currentPage != 1 %}<a href="{{uri}}/{{ here }}/{{ currentPage - 1 }}/{{busca}}">Anterior</a>{% endif %}
+                {% else %}
+                    {% if currentPage != 1 %}<a href="{{uri}}/{{ here }}/{{ currentPage - 1 }}">Anterior</a>{% endif %}
+                {% endif %}
+            </li>
+            
+            {% set foo1 = 1 + (2 * adjacentes) %}
+            {% set foo2 = (2 * adjacentes) %}
+            
+            {% if currentPage < foo1 %}
+                {% for i in 1..numPages %}
+                    {% if i < 2 + (2 * adjacentes) %}                         
+                        <li >
+                            {% if busca %}
+                                <a href="{{uri}}/{{ here }}/{{ i }}/{{busca}}" {% if currentPage == i %}class="active"{% endif %}>{{ i }} </a>
+                            {% else %}
+                                <a href="{{uri}}/{{ here }}/{{ i }}" {% if currentPage == i %}class="active"{% endif %}>{{ i }} </a>
+                            {% endif %}
+                        </li>                        
+                    {% endif %}
+                {% endfor %}    
+            {% elseif (currentPage > foo2) and (currentPage < numPages - 3)  %}
+                <li><a href="{{uri}}/buscar/1">1</a></li>
+                 {% for i in (currentPage - adjacentes)..numPages %}
+                    {% if i <= currentPage + (adjacentes) %}
+                        <li >
+                            {% if busca %}
+                                <a href="{{uri}}/{{ here }}/{{ i }}/{{busca}}" {% if currentPage == i %}class="active"{% endif %}>{{ i }} </a>
+                            {% else %}
+                                <a href="{{uri}}/{{ here }}/{{ i }}" {% if currentPage == i %}class="active"{% endif %}>{{ i }} </a>
+                            {% endif %}
+                        </li>                          
+                    {% endif %}                        
+                {% endfor %}    
+           {% else %}             
+                <li><a href="{{uri}}/buscar/1">1</a></li>
+                {% for i in numPages - (2 + (2 * adjacentes))..numPages %}
+                    {% if i <= numPages %}
+                        <li >
+                            {% if busca %}
+                                <a href="{{uri}}/{{ here }}/{{ i }}/{{busca}}" {% if currentPage == i %}class="active"{% endif %}>{{ i }} </a>
+                            {% else %}
+                                <a href="{{uri}}/{{ here }}/{{ i }}" {% if currentPage == i %}class="active"{% endif %}>{{ i }} </a>
+                            {% endif %}
+                        </li>                          
+                    {% endif %}                        
+                {% endfor %}
+            {% endif %}
+                        
+            <li {% if currentPage == numPages %}class="disabled"{% endif %}>
+                {% if busca %}
+                    {% if currentPage != numPages %}<a href="{{uri}}/{{ here }}/{{ currentPage + 1 }}/{{busca}}">Próximo</a>{% endif %}
+                {% else %}
+                    {% if currentPage != numPages %}<a href="{{uri}}/{{ here }}/{{ currentPage + 1 }}">Próximo</a>{% endif %}
+                {% endif %}
+                {% if currentPage == numPages %}<a href="#">Próximo</a>{% endif %}
+            </li>
+        </ul>
+{% endif %}

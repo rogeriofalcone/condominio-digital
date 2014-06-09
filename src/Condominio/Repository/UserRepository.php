@@ -235,6 +235,11 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
         $user->setMail($userData['mail']);
         $user->setRole($userData['role']);
         $user->setIdcond($userData['idcond']);
+        $user->setName($userData['name']);
+        $user->setBloco($userData['bloco']);
+        $user->setAp($userData['ap']);
+        $user->setTel($userData['tel']);
+        $user->setCel($userData['cel']);
         $createdAt = new \DateTime('@' . $userData['created_at']);
         $user->setCreatedAt($createdAt);
         return $user;

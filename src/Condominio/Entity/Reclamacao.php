@@ -12,7 +12,7 @@ class Reclamacao
      *
      * @var \Condominio\Entity\Empreendimento
      */
-    protected $empreendimento;
+    protected $condominio;
     protected $user;
     /**
      * Reclamacao id.
@@ -244,6 +244,14 @@ class Reclamacao
     public function setIdcond($idcond) {
         $this->idcond = $idcond;
     }
+    public function getCondominio() {
+        return $this->condominio;
+    }
+
+    public function setCondominio($condominio) {
+        $this->condominio = $condominio;
+    }
+
 
 
 
