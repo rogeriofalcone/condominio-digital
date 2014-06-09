@@ -3,7 +3,7 @@
 namespace Condominio\Entity;
 
 
-class Empreendimento
+class Condominio
 {
     protected $empresa;
     /**

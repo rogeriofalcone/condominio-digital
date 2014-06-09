@@ -66,6 +66,13 @@ class User implements UserInterface
     protected $createdAt;
     protected $idcond;
     protected $name;
+    
+    protected $bloco;
+    protected $ap;
+    protected $cel;
+    protected $tel;
+    
+    
     /**
      * The temporary uploaded file.
      *
@@ -204,6 +211,38 @@ class User implements UserInterface
     public function setName($name) {
         $this->name = $name;
     }
+    public function getBloco() {
+        return $this->bloco;
+    }
+
+    public function getAp() {
+        return $this->ap;
+    }
+
+    public function getCel() {
+        return $this->cel;
+    }
+
+    public function getTel() {
+        return $this->tel;
+    }
+
+    public function setBloco($bloco) {
+        $this->bloco = $bloco;
+    }
+
+    public function setAp($ap) {
+        $this->ap = $ap;
+    }
+
+    public function setCel($cel) {
+        $this->cel = $cel;
+    }
+
+    public function setTel($tel) {
+        $this->tel = $tel;
+    }
+
 
 
 }

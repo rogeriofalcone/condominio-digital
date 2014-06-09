@@ -16,14 +16,14 @@ class ReclamacaoRepository implements RepositoryInterface
     /**
      * @var \Condominio\Repository\EmpreendimentoRepository
      */
-    protected $empreendimentoRepository;
+    protected $condominioRepository;
     protected $imagemRepository;
     protected $userRepository;
 
-    public function __construct(Connection $db,$empreendimentoRepository,$imagemRepository,$userRepository)
+    public function __construct(Connection $db,$condominioRepository,$imagemRepository,$userRepository)
     {
         $this->db = $db;
-        $this->empreendimentoRepository = $empreendimentoRepository;
+        $this->condominioRepository = $condominioRepository;
         $this->imagemRepository = $imagemRepository;
         $this->userRepository = $userRepository;
     }
@@ -35,14 +35,15 @@ class ReclamacaoRepository implements RepositoryInterface
      */
     public function save($reclamacao)
     {
+        
         $reclamacaoData = array(
-            'idu' => $reclamacao->getIdu(),
-            'idcond' => $reclamacao->getIdcond(),
-            'titulo' => $reclamacao->getTitulo(),
-            'dados' => $reclamacao->getDados(),
+            'idu'       => $reclamacao->getIdu(),
+            'idcond'    => $reclamacao->getIdcond(),
+            'titulo'    => $reclamacao->getTitulo(),
+            'dados'     => $reclamacao->getDados(),
             'idassunto' => $reclamacao->getIdassunto(),
             'descricao' => $reclamacao->getDescricao(),
-            'youtube' => $reclamacao->getYoutube(),
+            'youtube'   => $reclamacao->getYoutube(),
             'dt_cadastro'=>date('Y-m-d H:i:s')
         );
 
@@ -118,10 +119,11 @@ class ReclamacaoRepository implements RepositoryInterface
         $queryBuilder
             ->select('r.id,r.idu,r.idcond,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.cidade,emp.uf')
             ->from('reclamacao', 'r')
-            ->innerJoin('r',"empreendimento","emp","emp.id = r.idcond")
+            ->innerJoin('r',"condominio","emp","emp.id = r.idcond")
             ->where("r.id = $id");
           
         $statement = $queryBuilder->execute();
+
         $reclamacaoData = $statement->fetch();
 
         return $reclamacaoData ? $this->buildReclamacao($reclamacaoData) : FALSE;
@@ -152,7 +154,7 @@ class ReclamacaoRepository implements RepositoryInterface
         $queryBuilder
             ->select('r.id,r.idu,r.idcond,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf')
             ->from('reclamacao', 'r')
-            ->innerJoin('r',"empreendimento","emp","emp.id = r.idcond");
+            ->innerJoin('r',"condominio","emp","emp.id = r.idcond");
         
         $queryBuilder->setMaxResults($limit)
             ->setFirstResult($offset)
@@ -185,7 +187,7 @@ class ReclamacaoRepository implements RepositoryInterface
         $queryBuilder
             ->select('r.id,r.idu,r.idcond,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf')
             ->from('reclamacao', 'r')
-            ->innerJoin('r',"empreendimento","emp","emp.id = r.idcond");
+            ->innerJoin('r',"condominio","emp","emp.id = r.idcond");
         
         $queryBuilder->setMaxResults($limit)
             ->setFirstResult($offset)
@@ -217,7 +219,7 @@ class ReclamacaoRepository implements RepositoryInterface
         $queryBuilder
             ->select('r.id,r.idu,r.idcond,r.titulo,r.descricao,r.idassunto,r.dados,r.dt_cadastro,r.visita,r.youtube,emp.idnome,emp.cidade,emp.uf')
             ->from('reclamacao', 'r')
-            ->innerJoin('r',"empreendimento","emp","emp.id = r.idcond");
+            ->innerJoin('r',"condominio","emp","emp.id = r.idcond");
         
         $queryBuilder->setMaxResults($limit)
             ->setFirstResult($offset)
@@ -249,7 +251,8 @@ class ReclamacaoRepository implements RepositoryInterface
      */
     protected function buildReclamacao($reclamacaoData)
     {
-        $empreendimento     = $this->empreendimentoRepository->find($reclamacaoData['idcond']);
+        
+        $condominio         = $this->condominioRepository->find($reclamacaoData['idcond']);
         $collectionImagem   = $this->imagemRepository->findAllByReclamacao($reclamacaoData['id']);
         $collectionUser     = $this->userRepository->find($reclamacaoData['idu']);
         
@@ -267,7 +270,7 @@ class ReclamacaoRepository implements RepositoryInterface
         $createdAt = new \DateTime($reclamacaoData['dt_cadastro']);        
         $reclamacao->setDt_cadastro($createdAt);
         
-        $reclamacao->setEmpreendimento($empreendimento);
+        $reclamacao->setCondominio($condominio);
         $reclamacao->setImagem($collectionImagem);
         $reclamacao->setUser($collectionUser);
         return $reclamacao;
