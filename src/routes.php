@@ -9,21 +9,15 @@ $app['controllers']->convert('user', function ($id) use ($app) {
 
 // Register routes.
 $app->get('/', 'Condominio\Controller\IndexController::indexAction')->bind('homepage');
-<<<<<<< HEAD
-$app->get('/me', 'Conta\Controller\UserController::meAction')->bind('me');
-$app->match('/login', 'Conta\Controller\UserController::loginAction')->bind('login');
-$app->get('/logout', 'Conta\Controller\UserController::logoutAction')->bind('logout');
 
 // Marcelo - Action de execução de emails
 $app->get('/emails/bemvindo', 'Condominio\Controller\EmailsController::bemvindoAction')->bind('bemvindo');
-
-=======
 
 $app->get('/me', 'Condominio\Controller\UserController::meAction')->bind('me');
 $app->match('/login', 'Condominio\Controller\UserController::loginAction')->bind('login');
 $app->get('/logout', 'Condominio\Controller\UserController::logoutAction')->bind('logout');
 $app->get('/email/bemvindo', 'Condominio\Controller\IndexController::emailbemvindoAction')->bind('emailbemvindo');
->>>>>>> 4de874421679b6d8420ab49945a5659d69a0a855
+
 $app->get('/admin/email/enviar/{idu}/{email}', 'Condominio\Controller\IndexController::emailSendAction')->bind('emailbemvindo')->value('idu',false)->value('email',false);
 
 $app->get('/admin/index', 'Condominio\Controller\AdminController::indexAction')->bind('homeuser');
