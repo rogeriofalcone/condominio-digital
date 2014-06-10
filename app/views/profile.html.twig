@@ -1,4 +1,4 @@
-{% extends 'layout.html.twig' %}
+{% extends 'admin_layout_user.html.twig' %}
 {% set active = 'homepage' %}
 
 {% block content %}
@@ -6,7 +6,9 @@
         <div class="container">
             <div class="row">
                 <div class="span3 offset1">
-                  <img src="{{ app.request.basepath }}/img/users/{{ user.username }}.png" class="img-circle"></img>
+                  <img src="{{ app.request.basepath }}/img/users/{{ user.username }}.png" class="img-circle" />
+                  <a href="{{path('admin_morador_foto')}}">Alterar Foto</a>
+                  
                 </div>
                 <div class="span5">
                   <h1 id="user_name">{{ user.username|e }}</h1>

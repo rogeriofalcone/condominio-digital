@@ -48,6 +48,38 @@ class ReclamacaoController {
 
         return $app['twig']->render('minhas_rec.html.twig', $data);
     }
+   public function todasReclamacoesAction(Request $request, Application $app) {
+
+        $token = $app['security']->getToken();
+        $user = $token->getUser();
+        $idu    =   $user->getId();
+        
+        $page = $request->get("page", 1);
+        
+        $limit = 10;
+        $total = $app['repository.reclamacao']->getCount();
+        
+        $numPages = ceil($total / $limit);
+        $currentPage = $page;
+        $offset = ($currentPage - 1) * $limit;
+        
+        $aLista = $app['repository.reclamacao']->findAll($limit, $offset,array(),$idu);
+        
+        $data = array(
+            'active'=>'minhas_reclamacoes',
+            'metaDescription' => '',
+            'active' => 'minhas_reclamacoes',
+            'aLista' => $aLista,
+            'currentPage' => $currentPage,
+            'numPages' => $numPages,
+            'adjacentes' => 2,
+            'busca'=>false,
+            'uri'=>'/admin/reclamacao',
+            'here' => "minhas-reclamacoes",
+        );
+
+        return $app['twig']->render('reclamacoes.html.twig', $data);
+    }
     public function adicionarAction(Request $request, Application $app) {
  
         $token = $app['security']->getToken();

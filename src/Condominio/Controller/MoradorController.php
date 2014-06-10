@@ -323,28 +323,8 @@ class MoradorController {
         return false;
     }
 
-    public function editAction(Request $request, Application $app) {
-        $reclamacao = $request->attributes->get('reclamacao');
-
-        if (!$reclamacao) {
-            $app->abort(404, 'The requested reclamacao was not found.');
-        }
-        $form = $app['form.factory']->create(new ArtistType(), $reclamacao);
-
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $app['repository.reclamacao']->save($reclamacao);
-                $message = 'The reclamacao ' . $reclamacao->getName() . ' has been saved.';
-                $app['session']->getFlashBag()->add('success', $message);
-            }
-        }
-
-        $data = array(
-            'form' => $form->createView(),
-            'title' => 'Edit reclamacao ' . $reclamacao->getName(),
-        );
-        return $app['twig']->render('form.html.twig', $data);
+    public function alterarFotoAction(Request $request, Application $app) {        
+        return $app['twig']->render('admin_morador_foto.html.twig');
     }
 
     public function deleteAction(Request $request, Application $app) {

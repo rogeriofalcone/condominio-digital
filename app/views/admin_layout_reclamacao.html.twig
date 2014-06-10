@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block secondaryNavigation %}
+     <div class="container">
+        <ul class="nav nav-tabs">
+            <li><a href="{{ path('adicionar_reclamacao') }}" class="success">Adicionar</a></li>
+            <li><a href="{{ path('todas_reclamacoes') }}">Todas</a></li>
+            <li><a href="{{ path('minhas_reclamacoes') }}">Minhas</a></li>
+          </ul>
+
+    </div> 
+{% endblock %}

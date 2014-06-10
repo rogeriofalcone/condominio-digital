@@ -22,14 +22,21 @@ $app->get('/admin/email/enviar/{idu}/{email}', 'Condominio\Controller\IndexContr
 
 $app->get('/admin/index', 'Condominio\Controller\AdminController::indexAction')->bind('homeuser');
 $app->get('/admin/reclamar/adicionar', 'Condominio\Controller\ReclamacaoController::adicionarAction')->bind('adicionar_reclamacao');
-$app->get('/admin/reclamacao/{id}', 'Condominio\Controller\ReclamacaoController::viewAction')->bind('view')->value('id',false);
+
 //$app->get('/admin/reclamacao', 'Condominio\Controller\ReclamacaoController::indexAction');
+$app->get('/admin/reclamacao/todas/{page}', 'Condominio\Controller\ReclamacaoController::todasReclamacoesAction')->bind('todas_reclamacoes')->value('page',1);;
 $app->get('/admin/reclamacao/minhas-reclamacoes/{page}', 'Condominio\Controller\ReclamacaoController::minhasReclamacoesAction')->bind('minhas_reclamacoes')->value('page',1);;
+
+$app->get('/admin/reclamacao/{id}', 'Condominio\Controller\ReclamacaoController::viewAction')->bind('view')->value('id',false);
 //
 $app->post('/admin/reclamar/adicionar', 'Condominio\Controller\ReclamacaoController::adicionarAction')->bind('adicionar_reclamacao_post');
+$app->post('/adicionar/foto', 'Condominio\Controller\ReclamacaoController::adicionarFotoAction');
 
 $app->get('/admin/morador', 'Condominio\Controller\MoradorController::listarAdminAction')->bind('admin_morador');
 $app->get('/admin/morador/email', 'Condominio\Controller\MoradorController::listarEmailAdminAction')->bind('admin_morador_email');
+$app->get('/admin/morador/notificacoes', 'Condominio\Controller\MoradorController::alterarFotoAction')->bind('admin_morador_notificacoes');
+$app->get('/admin/morador/alterar-foto', 'Condominio\Controller\MoradorController::alterarFotoAction')->bind('admin_morador_foto');
+$app->post('/admin/morador/alterar-foto', 'Condominio\Controller\MoradorController::alterarFotoAction')->bind('admin_morador_foto_enviar');
 
 $app->get('/admin/resposta/adicionar/{idr}', 'Condominio\Controller\RespostaController::adicionarAction')->bind('admin_resposta_adicionar')->value('idr',false);
 $app->post('/admin/adicionar-resposta', 'Condominio\Controller\RespostaController::adicionarAction');

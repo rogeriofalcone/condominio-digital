@@ -1,0 +1,20 @@
+{% extends 'admin_layout_user.html.twig' %}
+
+{% block content %}
+    <div class="strippes">
+        <div class="container">
+            <div class="row">
+                <div class="photos">
+                    <div id="tools0">
+                        <img class="uploaded img-thumbnail" src="/tmp_send_image/f7f5ddd25ec6db9ae0fd4fc18b100f3f.jpg" />
+                    </div>
+                </div>
+                <div class="span3 offset1">
+                  <input type="file" name="foto_morador" id="foto_morador" />
+                  <a href="{{path('admin_morador_foto')}}">Alterar Foto</a>                  
+                </div>                
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

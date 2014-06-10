@@ -1,0 +1,10 @@
+{% extends 'layout.html.twig' %}
+
+{% block secondaryNavigation %}
+     <div class="container">
+        <ul class="nav nav-tabs">
+            <li><a href="{{ path('me') }}" class="success">Meus Dados</a></li>
+            <li><a href="{{ path('admin_morador_notificacoes') }}">Notificações</a></li>
+          </ul>
+    </div>
+{% endblock %}

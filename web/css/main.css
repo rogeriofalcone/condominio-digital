@@ -2,3 +2,54 @@ body {
   min-height: 2000px;
   padding-top: 70px;
 }
+
+.panel-default{
+    border-color: #2b81af;
+}
+
+.panel-heading > a:hover,a:link > h4 > b{
+    color: #033c73;
+    text-decoration: none;
+}
+.panel-heading > a:hover,a:link > span{
+    color: #033c73;
+    text-decoration: none;
+}
+.panel-body{
+  padding: 4px 0 0 15px;   
+}
+
+
+
+form div.photos {
+    margin-right: -19px;
+    overflow: hidden;
+}
+form div.photos > div {
+    border-radius: 3px;
+    float: left;
+    height: 100%;
+    margin: 19px 19px 0 0;
+    width: 150px;
+}
+form div.photos > div.uploading {
+    border: 1px #cccccc solid;
+}
+form div.photos > div.uploaded {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+form div.photos > div.uploading span.progress {
+    background: #cccccc;
+    border-radius: 2px;
+    display: block;
+    height: 10px;
+    margin: 40px 5px;
+    overflow: hidden;
+}
+form div.photos > div.uploading span.progress span {
+    background: #0087B9;
+    display: block;
+    height: 100%;
+}
