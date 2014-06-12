@@ -84,6 +84,7 @@ $app['repository.reclamacao'] = $app->share(function ($app) {
 $app->before(function (Request $request) use ($app) {
     $protected = array(
         '/admin/' => 'ROLE_ADMIN',
+        '/morador/' => 'ROLE_USER',
         '/me' => 'ROLE_USER',
     );
     $path = $request->getPathInfo();

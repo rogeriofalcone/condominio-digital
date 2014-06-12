@@ -4,15 +4,15 @@ body {
 }
 
 .panel-default{
-    border-color: #2b81af;
+    //border-color: #2b81af;
 }
 
 .panel-heading > a:hover,a:link > h4 > b{
-    color: #033c73;
+    //color: #033c73;
     text-decoration: none;
 }
 .panel-heading > a:hover,a:link > span{
-    color: #033c73;
+    //color: #033c73;
     text-decoration: none;
 }
 .panel-body{

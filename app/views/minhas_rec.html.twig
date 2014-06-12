@@ -2,7 +2,7 @@
 {% block content %}
 
 
-    <div class="col-md-8">
+    <div class="col-md-10">
         <h4 style="color:#000000">Minhas Reclamações</h4>
         
         {% for reclamacao in aLista %}
@@ -18,7 +18,7 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-body text-justify">
-                            <a href="{{uri}}/{{reclamacao.id}}">{{reclamacao.descricao}}</a>
+                            <a href="{{uri}}/{{reclamacao.id}}">{{reclamacao.descricao|slice(0,150)}}</a>
                         </div>
                         <div style="padding: 11px;color:#080808">
                             <div style="float: right;font-size: 10px"><b>Autor:</b> {{reclamacao.user.name}} - Bloco: {{reclamacao.user.bloco}} - Ap: {{reclamacao.user.ap}}</div>    
