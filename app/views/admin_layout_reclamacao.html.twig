@@ -3,10 +3,14 @@
 {% block secondaryNavigation %}
      <div class="container">
         <ul class="nav nav-tabs">
+            
             <li><a href="{{ path('adicionar_reclamacao') }}" class="success">Adicionar</a></li>
-            <li><a href="{{ path('todas_reclamacoes') }}">Todas</a></li>
-            <li><a href="{{ path('minhas_reclamacoes') }}">Minhas</a></li>
+            <li {% if 'aberta_reclamacoes' == active %}class="active"{% endif %}><a href="{{ path('aberta_reclamacoes') }}">Abertas</a></li>
+            <li {% if 'pendente_reclamacoes' == active %}class="active"{% endif %}><a href="{{ path('pendente_reclamacoes') }}">Pendentes</a></li>
+            <li {% if 'fechada_reclamacoes' == active %}class="active"{% endif %}><a href="{{ path('fechada_reclamacoes') }}">Fechadas</a></li>
+            <li {% if 'todas_reclamacoes' == active %}class="active"{% endif %}><a href="{{ path('todas_reclamacoes') }}">Todas</a></li>
+            
+      
           </ul>
-
     </div> 
 {% endblock %}

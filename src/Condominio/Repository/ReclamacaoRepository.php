@@ -143,7 +143,7 @@ class ReclamacaoRepository implements RepositoryInterface
      *
      * @return array A collection of reclamacao, keyed by reclamacao id.
      */
-    public function findAll($limit, $offset = 0, $orderBy = array())
+    public function findAll($limit, $offset = 0, $orderBy = array(),$idu=false)
     {
         // Provide a default orderBy.
         if (!$orderBy) {
@@ -156,6 +156,9 @@ class ReclamacaoRepository implements RepositoryInterface
             ->from('reclamacao', 'r')
             ->innerJoin('r',"condominio","emp","emp.id = r.idcond");
         
+        if($idu){
+            $queryBuilder->where("r.idu = $idu");
+        }
         $queryBuilder->setMaxResults($limit)
             ->setFirstResult($offset)
             ->orderBy( key($orderBy), current($orderBy));

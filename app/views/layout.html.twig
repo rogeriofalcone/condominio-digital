@@ -1,7 +1,7 @@
 <!doctype html>
 <head>
     <meta charset="utf-8">
-    <title>{{ 'Administração de Condomínio'|trans }}</title>
+    <title>{{app.titulo_empresa}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link href="{{ app.request.basepath }}/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -10,21 +10,10 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Reclamações, organização, eventos tudo em um só lugar Síndico Online">
-    <meta property="og:description" content="Reclamações, organização, eventos tudo em um só lugar Síndico Online" />
-    <meta property="og:locale" content="pt_BR" />
-    <meta property="og:title" content="Administração de Condomínio" />
-    <meta property="og:site_name" content="Reclame Imóvel" />
-    <meta property="og:url" content="http://www.reclameimovel.com.br" />        
-    <meta property="og:image" content="http://www.reclameimovel.com.br/images/250x250Logo.png" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="100" />
-    <meta property="og:image:height" content="100" />
-    <meta property="og:type" content="website" />
-    <meta property="fb:app_id" content="237093413164290" /> 
-    <meta name="author" content="Reclame Imóvel" />
+    <meta name="description" content="{{app.descricao_empresa}}">
+    <meta name="author" content="" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="http://www.reclameimovel.com.br/images/favicon.ico" />
+    <link rel="shortcut icon" href="{{app.site_empresa}}/images/favicon.ico" />
     <meta name="language" content="pt" />      
         
         
@@ -40,23 +29,32 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <img id="logoClick" src="http://www.reclameimovel.com.br/images/250x250Logo.png" style="cursor:pointer; width: 40px;height: 40px;margin-right: 10px;margin-left:10px;margin-top: 5px" alt="Logo Reclame Imóvel" />
+          <img id="logoClick" src="{{app.site_empresa}}/images/logoBox.png" style="cursor:pointer; width: 40px;height: 40px;margin-right: 10px;margin-left:10px;margin-top: 5px" alt="Logo Reclame Imóvel" />
         </div>
         <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
             {% if is_granted('ROLE_USER') %}
             <li><a href="{{ path('homeuser') }}"><span class="glyphicon glyphicon-home"></span> {{ 'Principal'|trans }}</a></li>
-            <li><a href="{{ path('adicionar_reclamacao') }}"><span class="glyphicon glyphicon-bullhorn"></span> {{ 'Reclamar'|trans }}</a></li>
-            
+            <li><a href="{{ path('adicionar_reclamacao') }}"><span class="glyphicon glyphicon-bullhorn"></span> {{ 'Ocorrência'|trans }}</a></li>
+            <li><a href="{{ path('admin_sindicos')}}"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Síndico</a></li>
             
             <li class="dropdown">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">Condomínio <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="{{ path('todas_reclamacoes')}}"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Reclamações</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Moradores</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;Reservas de Áreas Comuns</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Informativos</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Termo</a></li>
+                <li><a href="{{ path('todas_reclamacoes')}}"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Ocorrência</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Circular</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin_morador')}}"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Morador</a></li>
+                {% endif %}
+                <li><a href="#"><span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;Notícia</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Documentos</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Portaria <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{ path('todas_reclamacoes')}}"><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Consulta Carro</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Consulta Morador</a></li>
               </ul>
             </li>
             {% else %}
@@ -65,13 +63,13 @@
             {% endif %}
             
             {% if is_granted('ROLE_ADMIN') %}
-            <li><a href="#excluirReclamacao"><span class="glyphicon glyphicon-bullhorn"></span> {{ 'Excluir Reclamacao'|trans }}</a></li>
+            <!-- <li><a href="#excluirReclamacao"><span class="glyphicon glyphicon-bullhorn"></span> {{ 'Excluir Reclamacao'|trans }}</a></li> -->
             {% endif %} 
           </ul>
           <ul class="nav navbar-nav navbar-right">
-              <li><a href="#contact"><span class="glyphicon glyphicon-envelope"></span> Sugestão</a></li>
+              <!-- <li><a href="#contact"><span class="glyphicon glyphicon-envelope"></span> Sugestão</a></li> -->
                 {% if is_granted('ROLE_USER') %}
-                    <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> &nbsp; <span class="badge pull-right">42</span></a></li>
+                <!-- <li><a href="/morador/morador/notificacoes"><span class="glyphicon glyphicon-envelope"></span> &nbsp; <span class="badge pull-right">42</span></a></li> -->
                     <li><a href="{{ path('me') }}"><span class="glyphicon glyphicon-user"></span> Meus Dados</a></li>
                     <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-download"></span> {{ 'Sair'|trans }}</a></li>
                 {% else %}

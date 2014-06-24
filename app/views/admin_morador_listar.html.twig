@@ -10,10 +10,11 @@
                         </div>
                     {% endfor %}
         {% endfor %}
+        <br />
             <div class="panel panel-default">
-                <div class="panel-heading"><b>Morador</b></div>
+                <div class="panel-heading"><b>Lista de Moradores</b></div>
                 <div class="panel-body">
-                    <div class="col-md-5">
+                    <div class="col-md-7">
                         <div class="table-responsive">
                             <table class="table">
                                 <tr>
@@ -23,7 +24,7 @@
                             {% for morador in aLista %}
                                 <tr>
                                     <td>{{morador.name}}</td>
-                                    <td>{{morador.email}}</td>
+                                    <td>{{morador.mail}}</td>
                                 </tr>
                             {% endfor %}
                             </table>

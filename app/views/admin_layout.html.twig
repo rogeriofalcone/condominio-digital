@@ -3,9 +3,8 @@
 {% block secondaryNavigation %}
      <div class="container">
         <ul class="nav nav-tabs">
-            <li {% if 'admin_morador' == active %}class="active"{% endif %}><a href="/admin/morador">Listar</a></li>
+            <li {% if 'admin_morador' == active %}class="active"{% endif %}><a href="{{ path('admin_morador')}}">Listar</a></li>
             <li {% if 'admin_morador_email' == active %}class="active"{% endif %}><a href="/admin/morador/email">Email</a></li>
           </ul>
-
     </div> 
 {% endblock %}

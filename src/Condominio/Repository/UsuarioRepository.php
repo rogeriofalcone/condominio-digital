@@ -161,7 +161,33 @@ class UsuarioRepository implements RepositoryInterface, UserProviderInterface
 
         return $users;
     }
+    public function findSindico($limit, $offset = 0, $orderBy = array())
+    {
+        // Provide a default orderBy.
+        if (!$orderBy) {
+            $orderBy = array('username' => 'ASC');
+        }
 
+        $queryBuilder = $this->db->createQueryBuilder();
+        $queryBuilder
+            ->select('u.*')
+            ->from('users', 'u')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('u.' . key($orderBy), current($orderBy));
+        $queryBuilder->where('u.role = :role')->setParameter('role', "ROLE_ADMIN");
+        
+        $statement = $queryBuilder->execute();
+        $usersData = $statement->fetchAll();
+
+        $users = array();
+        foreach ($usersData as $userData) {
+            $userId = $userData['id'];
+            $users[$userId] = $this->buildUser($userData);
+        }
+
+        return $users;
+    }
     /**
      * {@inheritDoc}
      */

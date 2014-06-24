@@ -50,11 +50,16 @@ class ReclamacaoController {
     }
    public function todasReclamacoesAction(Request $request, Application $app) {
 
+        $tipo = $request->get('_route');
+        $page = $request->get("page", 1);
+        
         $token = $app['security']->getToken();
         $user = $token->getUser();
         $idu    =   $user->getId();
         
-        $page = $request->get("page", 1);
+        if($user->getRole() == "ROLE_ADMIN"){
+            $idu = false;
+        }
         
         $limit = 10;
         $total = $app['repository.reclamacao']->getCount();
@@ -66,9 +71,7 @@ class ReclamacaoController {
         $aLista = $app['repository.reclamacao']->findAll($limit, $offset,array(),$idu);
         
         $data = array(
-            'active'=>'minhas_reclamacoes',
-            'metaDescription' => '',
-            'active' => 'minhas_reclamacoes',
+            'active' => $tipo,
             'aLista' => $aLista,
             'currentPage' => $currentPage,
             'numPages' => $numPages,
@@ -150,7 +153,7 @@ class ReclamacaoController {
                                     */
                     //$app['mailer']->send($message);   
                     
-                    $message = 'Reclamação salva com sucesso.';
+                    $message = 'Ocorrência salva com sucesso.';
                     $app['session']->getFlashBag()->add('success', $message);
                     // Redirect to the edit page.
                     $redirect = $app['url_generator']->generate('view');
@@ -163,7 +166,7 @@ class ReclamacaoController {
             $data = array(
                 'metaDescription' => '',
                 'form' => $form->createView(),
-                'title' => 'Nova reclamação'
+                'title' => 'Nova Ocorrência'
             );
             return $app['twig']->render('form.html.twig', $data);
         }

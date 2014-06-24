@@ -71,8 +71,11 @@ class User implements UserInterface
     protected $ap;
     protected $cel;
     protected $tel;
-    
-    
+    protected $comp;
+
+
+
+
     /**
      * The temporary uploaded file.
      *
@@ -242,7 +245,44 @@ class User implements UserInterface
     public function setTel($tel) {
         $this->tel = $tel;
     }
+    public function getComp() {
+        return $this->comp;
+    }
+
+    public function setComp($comp) {
+        $this->comp = $comp;
+    }
+
 
 
 
 }
+/*
+ * <div class="col-md-10">
+        <br />
+         <div class="panel panel-default">
+                <div class="panel-heading"><b>Todas Reclamações</b></div>
+                        <div class="table-responsive">
+                            <table class="table table-responsive" >
+                                <tr>
+                                    <td>Título</td>
+                                    <td>Tipo</td>
+                                    <td>Autor</td>
+                                    <td>Data</td>
+                                    <td>Status</td>
+                                </tr>
+                            {% for reclamacao in aLista %}
+                                <tr>
+                                    <td><a href="{{path('view')}}/{{reclamacao.id}}"><b>{{reclamacao.titulo}}</b></a></td>
+                                    <td>TIPO</td>
+                                    <td>{{reclamacao.user.name}} - Bloco: {{reclamacao.user.bloco}} - Ap: {{reclamacao.user.ap}}</td>
+                                    <td>{{reclamacao.dt_cadastro.date}}</td>
+                                    <td><span style="border-radius:10px;float: right;margin-left: 20px" class="label label-info left">Aberto</span></td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                        {% include "pagination_reclamacao.html.twig" %}
+                        </div>
+            </div>
+    </div>  
+ */

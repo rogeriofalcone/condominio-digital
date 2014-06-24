@@ -54,7 +54,10 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 // Register repositories.
-$app['view_path'] = 'http://reclameimovel.com.br/view';
+$app['view_path']           = 'http://www.fsitecnologia.com.br/view';
+$app['site_empresa']        = 'http://localhost:8000';
+$app['descricao_empresa']   = 'Sistema de administração básica de condomínio, efetuar reclamação, responder reclamação, enviar notificação, quadro de avisos, notívcias';
+$app['titulo_empresa']      = 'Sistema de Gerência Básica de Condomínios';
 
 $app['repository.empresa'] = $app->share(function ($app) {
     return new Condominio\Repository\EmpresaRepository($app['db']);

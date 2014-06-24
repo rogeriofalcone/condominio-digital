@@ -1,27 +1,53 @@
 {% extends 'admin_layout_user.html.twig' %}
-{% set active = 'homepage' %}
+{% set active = 'meusdados' %}
 
-{% block content %}
-    <div class="strippes">
-        <div class="container">
-            <div class="row">
-                <div class="span3 offset1">
-                  <img src="{{ app.request.basepath }}/img/users/{{ user.username }}.png" class="img-circle" />
-                  <a href="{{path('admin_morador_foto')}}">Alterar Foto</a>
-                  
+    {% block content %}
+        <br />
+        <br />
+            <div class="panel panel-default">
+                <div class="panel-heading">Minhas Informações</div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" action="" method="POST">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" placeholder="Nome" value="{{user.name}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">E-Mail</label>
+                                <div class="col-sm-7">
+                                    <input type="email" class="form-control" id="inputPassword3" value="{{user.mail}}" placeholder="fulano@fulano.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                <div class="col-sm-7">
+                                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password" value="">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">Apartamento</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="inputPassword3" placeholder="Apartamento" value="{{user.bloco}}">
+                                </div>
+                                <label for="inputPassword3" class="col-sm-2 control-label">Bloco</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="inputPassword3" placeholder="Bloco" value="{{user.ap}}">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-7">
+                                    <button type="submit" class="btn btn-default">Salvar</button>
+                                    <a href="/me" class="btn btn-info" style="float: right">Voltar</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="span5">
-                  <h1 id="user_name">{{ user.username|e }}</h1>
-                  <dl class="dl-horizontal">
-                      <dt>{{ 'email:'|e}}</dt>
-                      <dd>{{ user.mail|e }}</dd>
-                      <dt>{{ 'member for:'|e }}</dt>
-                      <dd>{{ memberSince }}</dd>
-                  </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="amazing"> {{ 'FOOTER:'|e }} </div>
-    
-{% endblock %}
+
+
+
+    {% endblock %}

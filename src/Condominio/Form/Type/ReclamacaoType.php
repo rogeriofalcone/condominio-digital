@@ -19,25 +19,21 @@ class ReclamacaoType extends AbstractType {
                         'class' => 'form-control',
                     ),
                     'choices' => array(
-                        1 => 'Atraso no empreendimento',
+                        1 => 'Manutenção',
                         2 => 'Me sinto Prejudicado (a)',
-                        3 => 'Mau atendimento do SAC',
-                        4 => 'Cobrança Indevida',
-                        5 => 'Demora na devolução do meu Dinheiro',
+                        3 => 'Limpeza',
+                        4 => 'Financeiro',
+                        5 => 'Segurança',
                         6 => 'Outros',
-                        7 => 'Propaganda enganosa',
-                        8 => 'Elogio a empresa',
                     ),
                     'label' => 'Tipo da Reclamação',
                     'data' => 1
                 ))
                 ->add('descricao', 'textarea', array('attr' => array('rows' => '10','class' => 'form-control','placeholder' => 'Preencher todo o seu problema,coloque todas as informações.',),
                     'label' => 'Descrição'
-                ))->add('youtube', 'text', array('attr' => array('class' => 'form-control addDiv','placeholder' => 'http://youtu.be/W1CSdYsJIWQ',),'required' => FALSE,
-                    'label' => 'Copie e cole o link do youtube com seu vídeo, basta clicar em compartilhar la no youtube.'
                 ))
                 ->add('files', 'file', array('label' => 'Imagem','required' => FALSE,"attr" => array("accept" => "image/*","multiple"=>"multiple")))
-                ->add('Salvar', 'submit', array('label' =>"Enviar reclamação",'attr' => array('class' => 'btn btn-primary separar')));
+                ->add('Salvar', 'submit', array('label' =>"Salvar Ocorrência",'attr' => array('class' => 'btn btn-primary separar')));
     }
 
     public function getName() {

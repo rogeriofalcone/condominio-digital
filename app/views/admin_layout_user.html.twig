@@ -3,8 +3,8 @@
 {% block secondaryNavigation %}
      <div class="container">
         <ul class="nav nav-tabs">
-            <li><a href="{{ path('me') }}" class="success">Meus Dados</a></li>
-            <li><a href="{{ path('admin_morador_notificacoes') }}">Notificações</a></li>
+            <li {% if 'meusdados' == active %}class="active"{% endif %}><a href="{{ path('me') }}" class="success">Meus Dados</a></li>
+            <!-- <li {% if 'notificacoes' == active %}class="active"{% endif %}><a href="{{ path('admin_morador_notificacoes') }}">Notificações</a></li> -->
           </ul>
     </div>
 {% endblock %}

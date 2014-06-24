@@ -1,17 +1,63 @@
-{% extends 'layout.html.twig' %}
+{% extends 'layout_login.html.twig' %}
 {% set active = 'account' %}
 
-{% block content %}
-    <div id="main" role="main" class="container">
-    <h1>{{ 'Login'|trans }}</h1>
-        {% if error %}
-            <div class="alert alert-error">
-                {{ error }}
-            </div>
-        {% endif %}
+    {% block content %}
+        
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
 
-        <form action="{{ path('admin_login_check') }}" method="post" novalidate {{ form_enctype(form) }} class="form-vertical">
-            {{ form_widget(form) }}
-        </form>
-    </div>
-{% endblock %}
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+    </style>    
+    <h2 style="text-align: center">Acesso Restrito - Moradores / Síndicos</h2>
+    <form class="form-signin" action="{{ path('admin_login_check') }}" method="post" novalidate {{ form_enctype(form) }}>
+                <div class="control-group">
+                    {{ form_label(form.username) }}
+                    <div class="controls">
+                        {{ form_widget(form.username) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(form.password) }}
+                    <div class="controls">
+                        {{ form_widget(form.password) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        {{ form_widget(form.Entrar) }}
+                        <a href="/" style="float: right" class="btn btn-large btn-info">Voltar</a>
+                    </div>
+                </div>
+                    {{ form_widget(form._token) }}
+            </form>
+          
+    {% endblock %}
+

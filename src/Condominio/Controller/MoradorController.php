@@ -114,6 +114,35 @@ class MoradorController {
 
         return $app['twig']->render('minhas_rec.html.twig', $data);
     }
+    public function notificacoesAction(Request $request, Application $app) {
+
+        
+        $page = $request->get("page", 1);
+        
+        $limit = 10;
+        $total = $app['repository.reclamacao']->getCountUsuario($idu);
+        
+        $numPages = ceil($total / $limit);
+        $currentPage = $page;
+        $offset = ($currentPage - 1) * $limit;
+        
+        $aLista = $app['repository.reclamacao']->findReclamacaoUsuario($limit, $offset,array(),$idu);
+        
+        $data = array(
+            'active'=>'minhas_reclamacoes',
+            'metaDescription' => '',
+            'active' => 'minhas_reclamacoes',
+            'aLista' => $aLista,
+            'currentPage' => $currentPage,
+            'numPages' => $numPages,
+            'adjacentes' => 2,
+            'busca'=>false,
+            'uri'=>'/empreendimento',
+            'here' => "minhas-reclamacoes",
+        );
+
+        return $app['twig']->render('admin_notificacoes.html.twig', $data);
+    }
     public function dadosAction(Request $request, Application $app) {
         
         /*

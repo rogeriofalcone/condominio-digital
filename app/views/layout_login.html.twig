@@ -1,0 +1,36 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>{{app.titulo_empresa}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="{{ app.request.basepath }}/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{ app.request.basepath }}/css/main.css" rel="stylesheet" type='text/css'>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="{{app.descricao_empresa}}">
+    <meta name="author" content="" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="{{app.site_empresa}}/images/favicon.ico" />
+    <meta name="language" content="pt" />      
+        
+        
+</head>
+<body role="document">
+    {% set active = active|default(null) %}    
+    
+    {% block secondaryNavigation %}
+    {% endblock %}
+        <div class="container">
+            {% block content %}
+        </div>
+    {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{{ app.request.basepath }}/js/bootstrap.min.js"></script>
+    <script src="{{ app.request.basepath }}/js/adicionar.js" type="text/javascript" ></script>    
+
+</body>
+</html>
