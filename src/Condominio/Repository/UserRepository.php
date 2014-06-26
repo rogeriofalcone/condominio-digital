@@ -37,24 +37,22 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
      */
     public function save($user)
     {
+        
+       
         $userData = array(
             'username' => $user->getUsername(),
+            'name' => $user->getName(),
             'mail' => $user->getMail(),
             'role' => $user->getRole(),
         );
+        
         // If the password was changed, re-encrypt it.
-        if (strlen($user->getPassword()) != 88) {
+        if (strlen($user->getPassword()) != 88 && strlen($user->getPassword()) > 0) {
             $userData['salt'] = uniqid(mt_rand());
             $userData['password'] = $this->encoder->encodePassword($user->getPassword(), $userData['salt']);
         }
-
-        if ($user->getId()) {
-            // If a new image was uploaded, make sure the filename gets set.
-            $newFile = $this->handleFileUpload($user);
-            if ($newFile) {
-                $userData['image'] = $user->getImage();
-            }
-
+        
+        if ($user->getId()) {         
             $this->db->update('users', $userData, array('id' => $user->getId()));
         } else {
             // The user is new, note the creation timestamp.
@@ -63,15 +61,7 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
             $this->db->insert('users', $userData);
             // Get the id of the newly created user and set it on the entity.
             $id = $this->db->lastInsertId();
-            $user->setId($id);
-
-            // If a new image was uploaded, update the user with the new
-            // filename.
-            $newFile = $this->handleFileUpload($user);
-            if ($newFile) {
-                $newData = array('image' => $user->getImage());
-                $this->db->update('users', $newData, array('id' => $id));
-            }
+            $user->setId($id);         
         }
     }
 
@@ -106,6 +96,10 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
     {
         return $this->db->delete('users', array('id' => $id));
     }
+    public function excluir($id)
+    {
+        return $this->db->delete('users', array('id' => $id));
+    }
 
     /**
      * Returns the total number of users.
@@ -115,14 +109,14 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
     public function getCount() {
         return $this->db->fetchColumn('SELECT COUNT(id) FROM users');
     }
+    public function getCountMorador() {
+        return $this->db->fetchColumn("SELECT COUNT(id) FROM users where role = 'ROLE_MORADOR'");
+    }
+    public function getCountAdministracao() {
+        return $this->db->fetchColumn("SELECT COUNT(id) FROM users where role <> 'ROLE_MORADOR'");
+    }
+    
 
-    /**
-     * Returns a user matching the supplied id.
-     *
-     * @param integer $id
-     *
-     * @return \Conta\Entity\User|false An entity object if found, false otherwise.
-     */
     public function find($id)
     {
         $userData = $this->db->fetchAssoc('SELECT * FROM users WHERE id = ?', array($id));
@@ -166,6 +160,59 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
 
         return $users;
     }
+    public function findMorador($limit, $offset = 0, $orderBy = array())
+    {
+        // Provide a default orderBy.
+        if (!$orderBy) {
+            $orderBy = array('username' => 'ASC');
+        }
+
+        $queryBuilder = $this->db->createQueryBuilder();
+        $queryBuilder
+            ->select('u.*')
+            ->from('users', 'u')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('u.' . key($orderBy), current($orderBy));
+        $queryBuilder->where('u.role = :role')->setParameter('role', "ROLE_MORADOR");
+        
+        $statement = $queryBuilder->execute();
+        $usersData = $statement->fetchAll();
+
+        $users = array();
+        foreach ($usersData as $userData) {
+            $userId = $userData['id'];
+            $users[$userId] = $this->buildUser($userData);
+        }
+
+        return $users;
+    }
+    public function findAdministracao($limit, $offset = 0, $orderBy = array())
+    {
+        // Provide a default orderBy.
+        if (!$orderBy) {
+            $orderBy = array('username' => 'ASC');
+        }
+
+        $queryBuilder = $this->db->createQueryBuilder();
+        $queryBuilder
+            ->select('u.*')
+            ->from('users', 'u')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('u.' . key($orderBy), current($orderBy));
+        $queryBuilder->where('u.role <> :role')->setParameter('role', "ROLE_MORADOR");
+        $statement = $queryBuilder->execute();
+        $usersData = $statement->fetchAll();
+        
+        $users = array();
+        foreach ($usersData as $userData) {
+            $userId = $userData['id'];
+            $users[$userId] = $this->buildUser($userData);
+        }
+
+        return $users;
+    }
     public function findSindico($limit, $offset = 0, $orderBy = array())
     {
         // Provide a default orderBy.
@@ -180,8 +227,10 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->orderBy('u.' . key($orderBy), current($orderBy));
-        $queryBuilder->where('u.role = :role')->setParameter('role', "ROLE_ADMIN");
+        $queryBuilder->where("u.role in('ROLE_ADMIN','ROLE_SUBSINDICO')");
+        
         $statement = $queryBuilder->execute();
+        
         $usersData = $statement->fetchAll();
         
         $users = array();
@@ -243,6 +292,16 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
         return 'Condominio\Entity\User' === $class;
     }
 
+    public function getTipo($role=""){
+        $aTipo['ROLE_ADMIN'] = "Síndico";
+        $aTipo['ROLE_SUBSINDICO'] = "Sub Síndico";
+        $aTipo['ROLE_MORADOR'] = "Morador";
+        $aTipo['ROLE_ADMINISTRATIVO'] = "Administrativo";
+        if($role){
+            return $aTipo[$role];
+        }
+    }
+
     /**
      * Instantiates a user entity and sets its properties using db data.
      *
@@ -267,6 +326,7 @@ class UserRepository implements RepositoryInterface, UserProviderInterface
         $user->setTel($userData['tel']);
         $user->setCel($userData['cel']);
         $user->setComp($userData['comp']);
+        $user->setNoTipo($this->getTipo($userData['role']));
         $createdAt = new \DateTime('@' . $userData['created_at']);
         $user->setCreatedAt($createdAt);
         return $user;

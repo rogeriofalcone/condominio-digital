@@ -36,13 +36,25 @@ $app->get('/morador/ocorrencia/{id}', 'Condominio\Controller\ReclamacaoControlle
 $app->post('/morador/ocorrencia/adicionar', 'Condominio\Controller\ReclamacaoController::adicionarAction')->bind('adicionar_reclamacao_post');
 $app->post('/morador/adicionar/foto', 'Condominio\Controller\ReclamacaoController::adicionarFotoAction');
 
+$app->post('/morador/salvar', 'Condominio\Controller\MoradorController::adicionarAction')->bind('adicionar-morador-salvar');
+$app->get('/morador/adicionar-morador', 'Condominio\Controller\MoradorController::adicionarAction')->bind('adicionar-morador');
+
 $app->get('/morador/morador', 'Condominio\Controller\MoradorController::listarAdminAction')->bind('admin_morador');
+$app->get('/morador/adicionar-morador/{id}', 'Condominio\Controller\MoradorController::adicionarAction')->bind('edit-morador');
+$app->get('/morador/excluir/{id}', 'Condominio\Controller\MoradorController::excluirAction')->bind('excluir-morador');
+
 $app->get('/morador/morador/email', 'Condominio\Controller\MoradorController::listarEmailAdminAction')->bind('admin_morador_email');
 $app->get('/morador/morador/notificacoes', 'Condominio\Controller\MoradorController::notificacoesAction')->bind('admin_morador_notificacoes');
 $app->get('/morador/morador/alterar-foto', 'Condominio\Controller\MoradorController::alterarFotoAction')->bind('admin_morador_foto');
 $app->post('/morador/morador/alterar-foto', 'Condominio\Controller\MoradorController::alterarFotoAction')->bind('admin_morador_foto_enviar');
 
-$app->get('/sindico/sindico', 'Condominio\Controller\SindicoController::listarAdminAction')->bind('admin_sindicos');
+$app->get('/sindico', 'Condominio\Controller\AdministracaoController::listarSindicoAction')->bind('listar-sindico');
+$app->get('/administracao', 'Condominio\Controller\AdministracaoController::listarAdminAction')->bind('admin-administracao');
+$app->get('/administracao/adicionar-usuario', 'Condominio\Controller\AdministracaoController::adicionarAction')->bind('adicionar-usuario');
+
+$app->get('/condominio/documento', 'Condominio\Controller\AdministracaoController::listarDocumentoAction')->bind('listar-documento');
+$app->get('/condominio/adicionar-documento', 'Condominio\Controller\AdministracaoController::adicionarDocumentoAction')->bind('adicionar-documento');
+$app->post('/condominio/salvar-documento', 'Condominio\Controller\AdministracaoController::adicionarDocumentoAction')->bind('salvar-documento');
 
 $app->get('/moradorresposta/adicionar/{idr}', 'Condominio\Controller\RespostaController::adicionarAction')->bind('admin_resposta_adicionar')->value('idr',false);
 $app->post('/morador/adicionar-resposta', 'Condominio\Controller\RespostaController::adicionarAction');

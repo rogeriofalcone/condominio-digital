@@ -72,7 +72,7 @@ class User implements UserInterface
     protected $cel;
     protected $tel;
     protected $comp;
-
+    protected $noTipo;
 
 
 
@@ -251,6 +251,14 @@ class User implements UserInterface
 
     public function setComp($comp) {
         $this->comp = $comp;
+    }
+ 
+    public function getNoTipo() {
+        return $this->noTipo;
+    }
+
+    public function setNoTipo($noTipo) {
+        $this->noTipo = $noTipo;
     }
 
 

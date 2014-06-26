@@ -1,4 +1,4 @@
-{% extends 'admin_layout_morador.html.twig' %}
+{% extends 'admin_layout_administracao.html.twig' %}
 
 {% block content %}
         {% set alertTypeAvaillable = [ 'info', 'success', 'warning', 'error'] %}
@@ -12,29 +12,27 @@
         {% endfor %}
         <br />
             <div class="panel panel-default">
-                <div class="panel-heading"><b>Lista de Moradores</b></div>
+                <div class="panel-heading"><b>Lista de Usuário</b></div>
                 <div class="panel-body">
-                    
+                    <div class="col-md-7">
                         <div class="table-responsive">
                             <table class="table">
                                 <tr>
                                     <td>Nome</td>
                                     <td>Email</td>
-                                    <td>Ferramentas</td>
+                                    <td>Tipo</td>
                                 </tr>
                             {% for morador in aLista %}
                                 <tr>
                                     <td>{{morador.name}}</td>
                                     <td>{{morador.mail}}</td>
-                                    <td><a href="{{ path('edit-morador', { 'id': morador.id })  }}" >Editar</a>
-                                    <!-- <a href="{{ path('excluir-morador', { 'id': morador.id }) }}" >Excluir</a> -->
-                                    </td>
+                                    <td>{{morador.notipo}}</td>
                                 </tr>
                             {% endfor %}
                             </table>
                         {% include "pagination_reclamacao.html.twig" %}
                         </div>
-                    
+                    </div>
                 </div>
             </div>
 {% endblock %}

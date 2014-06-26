@@ -15,7 +15,7 @@ $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
 $app['swiftmailer.options'] = array(
     'transport'=>'gmail',
-    'username' => 'contato@reclameimovel.com.br',
+    'username' => 'contato@fsitecnologia.com.br',
     'password' => 'ch4ng3m3',
     'host' => 'smtp.gmail.com',
     'port' => '465',
@@ -41,7 +41,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
         ),
     ),
     'security.role_hierarchy' => array(
-       'ROLE_ADMIN' => array('ROLE_USER'),
+       'ROLE_ADMIN' => array('ROLE_SUBSINDICO','ROLE_USER','ROLE_MORADOR','ROLE_ADMINISTRATIVO','ROLE_PORTARIA'),
     ),
 ));
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
@@ -65,17 +65,18 @@ $app['repository.empresa'] = $app->share(function ($app) {
 $app['repository.video'] = $app->share(function ($app) {
     return new Condominio\Repository\VideoRepository($app['db']);
 });  
+
 $app['repository.user'] = $app->share(function ($app) {
-    return new Condominio\Repository\UserRepository($app['db'],$app);
-});  
+    return new Condominio\Repository\UserRepository($app['db'], $app['security.encoder.digest']);
+});
 $app['repository.condominio'] = $app->share(function ($app) {
     return new Condominio\Repository\CondominioRepository($app['db']);
 });
+$app['repository.documento'] = $app->share(function ($app) {
+    return new Condominio\Repository\DocumentoRepository($app['db']);
+});
 $app['repository.imagem'] = $app->share(function ($app) {
     return new Condominio\Repository\ImagemRepository($app['db']);
-});
-$app['repository.usuario'] = $app->share(function ($app) {
-    return new Condominio\Repository\UsuarioRepository($app['db']);
 });
 $app['repository.resposta'] = $app->share(function ($app) {
     return new Condominio\Repository\RespostaRepository($app['db'],$app['repository.condominio'],$app['repository.usuario']);
@@ -86,10 +87,9 @@ $app['repository.reclamacao'] = $app->share(function ($app) {
 // Protect admin urls.
 $app->before(function (Request $request) use ($app) {
     $protected = array(
-        '/admin/' => 'ROLE_ADMIN',
-        '/morador/' => 'ROLE_USER',
-        '/me' => 'ROLE_USER',
+        '/admin/' => 'ROLE_ADMIN',        
     );
+    
     $path = $request->getPathInfo();
     foreach ($protected as $protectedPath => $role) {
         if (strpos($path, $protectedPath) !== FALSE && !$app['security']->isGranted($role)) {

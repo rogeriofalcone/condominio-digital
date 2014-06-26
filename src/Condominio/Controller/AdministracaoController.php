@@ -18,7 +18,7 @@ use Facebook\FacebookRequestException;
 use Facebook\FacebookSession;
 
 
-class SindicoController {
+class AdministracaoController {
 
     public function indexAction(Request $request, Application $app) {
 	$data = array(        
@@ -32,16 +32,16 @@ class SindicoController {
         $page = $request->get("page", 1);
         
         $limit = 10;
-        $total = $app['repository.reclamacao']->getCountUsuario($idu);
+        $total = $app['repository.user']->getCountAdministracao($idu);
         
         $numPages = ceil($total / $limit);
         $currentPage = $page;
         $offset = ($currentPage - 1) * $limit;
         
-        $aLista = $app['repository.user']->findSindico($limit, $offset,array());
+        $aLista = $app['repository.user']->findAdministracao($limit, $offset,array());
         
         $data = array(
-            'active'=>'admin_morador',
+            'active'=>'admin-administracao',
             'metaDescription' => '',
             'aLista' => $aLista,
             'currentPage' => $currentPage,
@@ -52,7 +52,126 @@ class SindicoController {
             'here' => "morador",
         );
         
-        return $app['twig']->render('admin_sindico_listar.html.twig',$data);
+        return $app['twig']->render('admin_administracao_listar.html.twig',$data);
+    }
+    public function listarSindicoAction(Request $request, Application $app) {
+        $page = $request->get("page", 1);
+        
+        $limit = 10;
+        $total = 0;//$app['repository.user']->getCountSindico($idu);
+        
+        $numPages = ceil($total / $limit);
+        $currentPage = $page;
+        $offset = ($currentPage - 1) * $limit;
+        
+        $aLista = $app['repository.user']->findSindico($limit, $offset,array());
+        
+        $data = array(
+            'active'=>'admin_administracao',
+            'metaDescription' => '',
+            'aLista' => $aLista,
+            'currentPage' => $currentPage,
+            'numPages' => $numPages,
+            'adjacentes' => 2,
+            'busca'=>false,
+            'uri'=>'/admin/morador',
+            'here' => "morador",
+        );
+        
+        return $app['twig']->render('sindico_listar.html.twig',$data);
+    }
+    public function listarDocumentoAction(Request $request, Application $app) {
+        $page = $request->get("page", 1);
+        
+        $limit = 10;
+        $total = 0;//$app['repository.user']->getCountSindico($idu);
+        
+        $numPages = ceil($total / $limit);
+        $currentPage = $page;
+        $offset = ($currentPage - 1) * $limit;
+        
+        $aLista = $app['repository.documento']->findAll($limit, $offset,array());
+        
+        $data = array(
+            'active'=>'listar-documento',
+            'aLista' => $aLista,
+            'currentPage' => $currentPage,
+            'numPages' => $numPages,
+            'adjacentes' => 2,
+            'busca'=>false,
+            'uri'=>'/admin/morador',
+            'here' => "morador",
+        );
+        
+        return $app['twig']->render('admin_documento_listar.html.twig',$data);
+    }
+    public function adicionarDocumentoAction(Request $request, Application $app) {
+                
+        $id = $request->get("id");
+        
+        if ($request->isMethod('POST')) {
+            
+            $oUser = new User();
+            
+            $oUser->setId($id);
+            $oUser->setMail($request->get("mail"));
+            $oUser->setName($request->get("name"));
+            $oUser->setPassword($request->get("password"));
+            $oUser->setRole("ROLE_MORADOR");
+            
+            if ($oUser) {
+                $app['repository.user']->save($oUser);
+          
+                $oUser = $app['repository.user']->find($id);
+                 
+                  /* 
+                $body = $app['twig']->render('emailCadastroUsuario.html.twig',
+                         array(
+                             'name' => $oUser->getName(),
+                             'mail' => $oUser->getEmail(),
+                         ));
+
+                 $message = \Swift_Message::newInstance()
+                                 ->setSubject('[Park Reality] Seja bem vindo. ')
+                                 ->setFrom(array('contato@parkreality.com.br'=>'Park Reality'))
+                                 ->setTo(array($oUser->getEmail()=>$oUser->getName()))
+                                 ->setBody($body)
+                                 ->setContentType("text/html");
+
+                 $app['mailer']->send($message);   
+               */
+                $message = 'Usuário salvo com sucesso.';
+                $app['session']->getFlashBag()->add('success', $message);
+                // Redirect to the edit page.
+                $redirect = $app['url_generator']->generate('admin_morador');
+
+                return $app->redirect($redirect);
+            }
+
+            return false;
+        } else {
+            if($id){
+                $oUser = $app['repository.user']->find($id);
+                
+                if($oUser->getRole() != "ROLE_MORADOR"){
+                    
+                    $message = 'Usuário não é um morador.';
+                    $app['session']->getFlashBag()->add('success', $message);
+                    // Redirect to the edit page.
+                    $redirect = $app['url_generator']->generate('admin_morador');
+
+                    return $app->redirect($redirect);
+                }
+            }else{
+                $oUser = new User();
+            }
+            $data = array(
+                'user' => $oUser,
+                'title' => 'Nova reclamação',
+                'active' => 'adicionar-documento'
+            );
+            return $app['twig']->render('admin_documento_adicionar.html.twig', $data);
+        }
     }
     public function listarEmailAdminAction(Request $request, Application $app) {
         $page = $request->get("page", 1);
@@ -204,55 +323,7 @@ class SindicoController {
         } 
     }
     public function adicionarAction(Request $request, Application $app) {
-        #$request = $app['request'];
-        
-        $idnome = $request->get("idnome");
-        
-        if(is_string($idnome)){
-            $oEmp = $app['repository.empreendimento']->findIdNome($idnome);
-        }
-        if(is_numeric($idnome)){
-            $oEmp = $app['repository.empreendimento']->find($idnome);
-        }
-        
-        $reclamacao = new Reclamacao();
-        
-        if ($request->isMethod('GET')) {
-            if (!$oEmp) {
-                $message = 'Nenhum empreendimento foi escolhido por favor efetue uma busca e clique nele para adicionar.';
-                $app['session']->getFlashBag()->add('warning', $message);
-                // Redirect to the edit page.
-                $redirect = $app['url_generator']->generate('principal');
-                return $app->redirect($redirect);
-            }
-            /*
-             * Pegar id do banco de dados
-             */
-            $reclamacao->setIde($oEmp->getId());
-        }
-        
-        /*
-         * Pegar id da sessao
-         */
-        if($app['token']){
-            $uid = $app['token']->getUid();
-            $user = $app['repository.user']->find($uid);
-            $reclamacao->setDados($user->getDadosImovel());
-        }else{
-            $uid = 1;
-        }
-        
-        if (!$user) {
-            $message = 'Nenhum usuário logado para efetuar o envio de uma reclamação.';
-            $app['session']->getFlashBag()->add('warning', $message);
-            $redirect = $app['url_generator']->generate('principal');
-            return $app->redirect($redirect);
-        }
-        
-        $reclamacao->setIdu($uid);
-        
-        $form = $app['form.factory']->create(new ReclamacaoType(), $reclamacao);
-
+                
         if ($request->isMethod('POST')) {
             
             $form->bind($request);
@@ -311,19 +382,13 @@ class SindicoController {
 
             return false;
         } else {
-            $nome_empresa   = $oEmp->getEmpresa()->getNome();
-            $nome_emp       = $oEmp->getNome();
-            $bairro         = $oEmp->getBairro();
+            $oUser = new User();
             
-            $sub_titulo     = $nome_empresa. " - " . $nome_emp . " - " . $bairro;
-
             $data = array(
-                'metaDescription' => '',
-                'form' => $form->createView(),
+                'user' => $oUser,
                 'title' => 'Nova reclamação',
-                'sub_titulo' => $sub_titulo,
             );
-            return $app['twig']->render('form.html.twig', $data);
+            return $app['twig']->render('admin_administracao_adicionar.html.twig', $data);
         }
     }
     public function adicionarFotoAction(Request $request, Application $app) {

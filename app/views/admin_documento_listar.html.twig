@@ -1,0 +1,18 @@
+{% extends 'admin_layout_documento.html.twig' %}
+
+{% block content %}
+<br>
+        <div class="row">
+            {% for doc in aLista %}
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                  <div class="caption">
+                    <h4>{{doc.titulo}}</h4>
+                    <p><a href="#" class="btn btn-primary" role="button">Download</a></p>
+                  </div>
+                </div>
+              </div>
+             
+        {% endfor %}
+        </div>
+{% endblock %}

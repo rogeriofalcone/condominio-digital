@@ -1,0 +1,67 @@
+{% extends 'admin_layout_morador.html.twig' %}
+{% set active = 'adicionar-morador' %}
+
+    {% block content %}
+        <br />
+        <br />
+            <div class="panel panel-default">
+                <div class="panel-heading">Cadastro de Morador</div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" action="{{ path('adicionar-morador-salvar') }}" method="POST">
+                            <input type="hidden" value="{{user.id}}" name="id">
+                            <input type="hidden" value="ROLE_MORADOR" name="role">
+                            
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Nome</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" placeholder="Nome" name="name" value="{{user.name}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">E-Mail</label>
+                                <div class="col-sm-7">
+                                    <input type="email" class="form-control" id="inputPassword3" name="mail" required="" value="{{user.mail}}" placeholder="fulano@fulano.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                <div class="col-sm-7">
+                                    <input type="password" class="form-control" id="inputPassword3" name="password"  placeholder="Password" value="">
+                                </div>
+                            </div>
+                            
+                            <hr />
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-2 control-label">Apartamento</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control" id="inputPassword3" placeholder="Apartamento" name="ap" required="" value="{{user.ap}}">
+                                </div>
+                                <label for="inputPassword3" class="col-sm-2 control-label">Bloco</label>
+                                <div class="col-sm-2">
+                                    <select name="bloco" class="form-control" >
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                    </select>
+                                </div>
+                            </div>     
+                            <hr />
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-7">
+                                    <button type="submit" class="btn btn-success">Salvar</button>
+                                    <a href="{{ path('admin_morador') }}" class="btn btn-info" style="float: right">Voltar</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+    {% endblock %}
