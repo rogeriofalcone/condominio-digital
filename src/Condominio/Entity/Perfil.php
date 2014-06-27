@@ -4,7 +4,7 @@ namespace Condominio\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class TipoUsuario
+class Perfil
 {
     protected $id;
     protected $nome;

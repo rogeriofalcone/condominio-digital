@@ -15,4 +15,89 @@
         <h3 style="text-align: center">Condomínio Park Reality - Campo Grande - RJ</h3>
 
         <br />
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><b>Últimas Notícias</b></div>
+                        <ul class="list-group">
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        </ul>  
+                </div>
+            </div>
+            <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>Últimos Documentos</b></div>
+                    <ul class="list-group">
+                            {% for doc in aDoc %}
+                            <li class="list-group-item"> 
+                                <b>{{doc.titulo}}</b> <a role="button" style="float: right" class="btn btn-primary btn-xs" href="#">Download</a>
+                            </li>
+                            {% endfor %}
+                    </ul>  
+            </div>
+        </div>
+        </div>        
+        <div class="row marketing">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>Últimas Circulares</b></div>
+
+                    <ul class="list-group">
+                         <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                    </ul> 
+            </div>
+        </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><b>Últimas Reclamações</b></div>
+                        <ul class="list-group">
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        <li class="list-group-item"> 
+                                <b>Problema x</b> <a role="button" style="float: right" class="btn btn-primary btn-success btn-xs" href="#">Visualizar</a>
+                            </li>
+                        </ul>  
+                </div>
+            </div>
+        
+        </div>
+
 {% endblock %}

@@ -72,6 +72,9 @@ $app['repository.user'] = $app->share(function ($app) {
 $app['repository.condominio'] = $app->share(function ($app) {
     return new Condominio\Repository\CondominioRepository($app['db']);
 });
+$app['repository.informativo'] = $app->share(function ($app) {
+    return new Condominio\Repository\InformativoRepository($app['db']);
+});
 $app['repository.documento'] = $app->share(function ($app) {
     return new Condominio\Repository\DocumentoRepository($app['db']);
 });

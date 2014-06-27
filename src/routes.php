@@ -48,6 +48,10 @@ $app->get('/morador/morador/notificacoes', 'Condominio\Controller\MoradorControl
 $app->get('/morador/morador/alterar-foto', 'Condominio\Controller\MoradorController::alterarFotoAction')->bind('admin_morador_foto');
 $app->post('/morador/morador/alterar-foto', 'Condominio\Controller\MoradorController::alterarFotoAction')->bind('admin_morador_foto_enviar');
 
+$app->get('/informativo', 'Condominio\Controller\InformativoController::indexAction')->bind('listar-informativo');
+$app->get('/informativo/adicionar', 'Condominio\Controller\InformativoController::adicionarAction')->bind('adicionar-informativo');
+$app->post('/informativo/salvar', 'Condominio\Controller\InformativoController::adicionarAction')->bind('salvar-informativo');
+
 $app->get('/sindico', 'Condominio\Controller\AdministracaoController::listarSindicoAction')->bind('listar-sindico');
 $app->get('/administracao', 'Condominio\Controller\AdministracaoController::listarAdminAction')->bind('admin-administracao');
 $app->get('/administracao/adicionar-usuario', 'Condominio\Controller\AdministracaoController::adicionarAction')->bind('adicionar-usuario');
@@ -55,6 +59,8 @@ $app->get('/administracao/adicionar-usuario', 'Condominio\Controller\Administrac
 $app->get('/condominio/documento', 'Condominio\Controller\AdministracaoController::listarDocumentoAction')->bind('listar-documento');
 $app->get('/condominio/adicionar-documento', 'Condominio\Controller\AdministracaoController::adicionarDocumentoAction')->bind('adicionar-documento');
 $app->post('/condominio/salvar-documento', 'Condominio\Controller\AdministracaoController::adicionarDocumentoAction')->bind('salvar-documento');
+
+
 
 $app->get('/moradorresposta/adicionar/{idr}', 'Condominio\Controller\RespostaController::adicionarAction')->bind('admin_resposta_adicionar')->value('idr',false);
 $app->post('/morador/adicionar-resposta', 'Condominio\Controller\RespostaController::adicionarAction');
